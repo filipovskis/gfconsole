@@ -12,5 +12,11 @@ local load = include("load.lua")
 load.table({
     shared = {},
     server = {},
-    client = {}
+    client = {
+        "vgui/checkbox",
+        "vgui/selector",
+        "vgui/header",
+        "vgui/container",
+        "vgui/console"
+    }
 })
