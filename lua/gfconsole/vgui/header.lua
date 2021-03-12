@@ -107,7 +107,7 @@ function PANEL:MoveController()
         local x, y = input.GetCursorPos()
         local cx, cy = self:GetOffset()
 
-        self:GetParent():SetPos(x - cx, y - cy)
+        self:GetParent():Move(x - cx, y - cy)
     end
 end
 

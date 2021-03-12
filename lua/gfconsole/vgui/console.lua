@@ -13,6 +13,8 @@ function PANEL:Init()
     self.header = self:Add("GFConsole.Header")
 
     self.panel = self:Add("GFConsole.Container")
+
+    self:SetCookieName("gfconsole")
 end
 
 function PANEL:PerformLayout(w, h)
@@ -34,7 +36,46 @@ function PANEL:Think()
     self:ResizeController()
 end
 
+function PANEL:LoadCookies()
+    local pos = self:GetCookie("position")
+    local size = self:GetCookie("size")
+    local scrw, scrh = ScrW(), ScrH()
+
+    if pos then
+        pos = util.JSONToTable(pos)
+
+        self:SetPos(pos.x * scrw, pos.y * scrh)
+    end
+    
+    if size then
+        size = util.JSONToTable(size)
+
+        self:SetSize(size.w * scrw, size.h * scrh)
+    else
+        self:SetSize(ScrW(), ScrH() * .25)
+    end
+end
+
 -- Custom methods
+
+function PANEL:SaveSize(w, h)
+    self:SetCookie("size", util.TableToJSON({
+        w = (w / ScrW()),
+        h = (h / ScrH())
+    }))
+end
+
+function PANEL:SavePosition(x, y)
+    self:SetCookie("position", util.TableToJSON({
+        x = (x / ScrW()),
+        y = (y / ScrH())
+    }))
+end
+
+function PANEL:Move(x, y)
+    self:SetPos(x, y)
+    self:SavePosition(x, y)
+end
 
 function PANEL:ResizeController()
     local x, y = self:GetRelativeToCursor()
@@ -49,6 +90,7 @@ function PANEL:ResizeController()
 
     if self.resizable then
         self:SetSize(x, y)
+        self:SaveSize(x, y)
     end
 end
 
@@ -60,3 +102,5 @@ function PANEL:GetRelativeToCursor()
 end
 
 vgui.Register("GFConsole", PANEL, "EditablePanel")
+
+-- gfconsole.reload()
