@@ -36,6 +36,8 @@ function PANEL:Init()
     self.ping = self:Add("DLabel")
     self.ping:SetFont("gfconsole.Title")
 
+    self:SetCursor("sizeall")
+
     self:ResetCollected()
 end
 
@@ -55,6 +57,18 @@ function PANEL:Paint(w, h)
     surface.DrawRect(0, 0, w, h)
 end
 
+function PANEL:OnMousePressed(code)
+    if code == MOUSE_LEFT then
+        self:OnClick()
+    end
+end
+
+function PANEL:OnMouseReleased(code)
+    if code == MOUSE_LEFT then
+        self:OnRelease()
+    end
+end
+
 function PANEL:Think()
     local curtime = CurTime()
 
@@ -71,9 +85,57 @@ function PANEL:Think()
 
         self.next_update = curtime + 1
     end
+
+    self:MoveController()
 end
 
 -- Custom methods
+
+function PANEL:OnClick()
+    self:CatchOffset()
+    self:MouseCapture(true)
+    self.moving = true
+end
+
+function PANEL:OnRelease()
+    self:MouseCapture(false)
+    self.moving = false
+end
+
+function PANEL:MoveController()
+    if self.moving then
+        local x, y = input.GetCursorPos()
+        local cx, cy = self:GetOffset()
+
+        self:GetParent():SetPos(x - cx, y - cy)
+    end
+end
+
+function PANEL:CatchOffset()
+    local x, y = self:GetRelativeToCursor()
+
+    self.offset = {
+        x = x,
+        y = y
+    }
+end
+
+function PANEL:GetOffset()
+    local offset = self.offset
+
+    if offset then
+        return offset.x, offset.y
+    else
+        return 0, 0
+    end
+end
+
+function PANEL:GetRelativeToCursor()
+    local x, y = self:LocalToScreen(0, 0)
+    local x2, y2 = input.GetCursorPos()
+
+    return (x2 - x), (y2 - y)
+end
 
 function PANEL:UpdateCollected()
     table.insert(self.collected.fps, (1 / FrameTime()))
