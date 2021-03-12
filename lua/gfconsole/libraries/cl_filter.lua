@@ -62,3 +62,9 @@ function filter.check(id)
         return false
     end
 end
+
+hook.Add("gfconsole.CanPass", "gfconsole.Filters", function(id)
+    if filter.check(id) then
+        return false
+    end
+end)

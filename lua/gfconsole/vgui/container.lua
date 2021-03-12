@@ -45,9 +45,10 @@ function PANEL:Paint(w, h)
     surface.DrawRect(0, 0, w, h)
 end
 
-function PANEL:AddCheckbox(text, func)
+function PANEL:AddCheckbox(text, bool, func)
     local checkbox = vgui.Create("GFConsole.Checkbox")
     checkbox:SetText(text)
+    checkbox:SetValue(bool)
     checkbox.OnChange = function(panel, bool)
         func(bool)
     end
@@ -80,10 +81,10 @@ end
 
 function PANEL:LoadFilters()
     for _, id in ipairs(gfconsole.filter.get()) do
-        self:AddCheckbox(id, function()
+        self:AddCheckbox(id, not gfconsole.filter.check(id), function()
             gfconsole.filter.toggle(id)
         end)
-    end
+    end 
 end
 
 vgui.Register("GFConsole.Container", PANEL)
