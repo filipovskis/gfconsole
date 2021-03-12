@@ -29,6 +29,10 @@ function PANEL:Init()
 
     self.control:AddPanel(self.selector)
 
+    self:AddButton("Clear", function()
+        self.richtext:SetText("")
+    end)
+
     self:LoadButtons()
     self:LoadFilters()
 end
@@ -66,16 +70,20 @@ function PANEL:AddRecord(...)
     end
 end
 
+function PANEL:AddButton(name, func)
+    local button = vgui.Create("gfconsole.Button")
+    button:SetText(name)
+    button:SizeToContentsX(10)
+    button.DoClick = function()
+        func()
+    end
+
+    self.control:AddPanel(button)
+end
+
 function PANEL:LoadButtons()
     for _, data in pairs(gfconsole.buttons.get()) do
-        local button = vgui.Create("gfconsole.Button")
-        button:SetText(data.name)
-        button:SizeToContentsX(10)
-        button.DoClick = function()
-            data.func()
-        end
-
-        self.control:AddPanel(button)
+        self:AddButton(data.name, data.func)
     end
 end
 
