@@ -58,8 +58,6 @@ function PANEL:AddRecord(...)
             self.richtext:InsertColorChange(object.r, object.g, object.b, object.a)
         end
     end
-
-    self.richtext:AppendText("\n")
 end
 
 function PANEL:LoadButtons()

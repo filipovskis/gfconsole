@@ -21,6 +21,6 @@ surface.CreateFont("gfconsole.Button", {
 
 surface.CreateFont("gfconsole.Text", {
     font = "Roboto",
-    size = 16,
+    size = 18,
     extended = true
 })
