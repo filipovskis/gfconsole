@@ -9,12 +9,6 @@ Email: tochonement@gmail.com
 
 PANEL = {}
 
-function PANEL:Init()
-    self:AddOption("Client")
-    self:AddOption("Server")
-    self:AddOption("Both")
-end
-
 function PANEL:PerformLayout(w, h)
     local children = self:GetChildren()
     local wide = w / #children
@@ -31,7 +25,25 @@ end
 
 -- Custom methods
 
-function PANEL:AddOption(text)
+function PANEL:AddConvar(name, options)
+    local convar = GetConVar(name)
+    local current = convar:GetString()
+
+    for _, data in ipairs(options) do
+        local id = data[1]
+        local name = data[2]
+
+        local option = self:AddOption(name, function()
+            convar:SetString(id)
+        end)
+
+        if id == current then
+            self:SelectOption(option)
+        end
+    end
+end
+
+function PANEL:AddOption(text, func)
     local button = self:Add("DButton")
     button:SetText(text)
     button:SetTextColor(color_white)
@@ -47,7 +59,10 @@ function PANEL:AddOption(text)
     end
     button.DoClick = function(panel)
         self:SelectOption(panel)
+        func()
     end
+
+    return button
 end
 
 function PANEL:SelectOption(panel)

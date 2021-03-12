@@ -16,6 +16,11 @@ function PANEL:Init()
 
     self.selector = self:Add("GFConsole.Selector")
     self.selector:SetWide(200)
+    self.selector:AddConvar("gfconsole_realm", {
+        {"client", "Client"},
+        {"server", "Server"},
+        {"both", "Both"}
+    })
 
     self.richtext = self:Add("RichText")
     self.richtext.PerformLayout = function(panel)
@@ -61,12 +66,12 @@ function PANEL:AddRecord(...)
 end
 
 function PANEL:LoadButtons()
-    for name, func in pairs(gfconsole.buttons.get()) do
+    for _, data in pairs(gfconsole.buttons.get()) do
         local button = vgui.Create("gfconsole.Button")
-        button:SetText(name)
+        button:SetText(data.name)
         button:SizeToContentsX(10)
         button.DoClick = function()
-            func()
+            data.func()
         end
 
         self.control:AddPanel(button)

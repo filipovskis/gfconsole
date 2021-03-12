@@ -42,10 +42,21 @@ if SERVER then
 else
     local function add(from_server, filter, ...)
         local should_receive = hook.Run("gfconsole.CanPass", filter)
+        local realm = GetConVar("gfconsole_realm"):GetString()
         local arguments = {...}
 
         if should_receive == false then
             return
+        end
+
+        if from_server then
+            if realm == "client" then
+                return
+            end
+        else
+            if realm == "server" then
+                return
+            end
         end
 
         gfconsole.search_panel("GFConsole.Container", function(panel)
