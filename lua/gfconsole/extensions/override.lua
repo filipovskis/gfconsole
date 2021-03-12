@@ -40,7 +40,7 @@ end
 local function translate(object)
     local type = type(object)
     local translator = translators[type]
-    
+
     if translator then
         return translator(object)
     else
@@ -165,7 +165,7 @@ local function override()
     end
     
     _G.MsgC = function(...)
-        _Msg(...)
+        _MsgC(...)
     
         send("Msg", ...)
     end
