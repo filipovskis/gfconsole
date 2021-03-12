@@ -12,7 +12,7 @@ local mat = Material("icon16/tick.png")
 PANEL = {}
 
 function PANEL:Init()
-    self.Label:SetFont("gfconsole.Title")
+    self.Label:SetFont("gfconsole.Button")
     self.Label:SetContentAlignment(4)
     self.Label:SetTextColor(color_white)
 end

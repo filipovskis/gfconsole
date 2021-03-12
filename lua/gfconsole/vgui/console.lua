@@ -7,12 +7,6 @@ Email: tochonement@gmail.com
 
 --]]
 
-surface.CreateFont("gfconsole.Title", {
-    font = "Roboto",
-    size = 18,
-    extended = true
-})
-
 PANEL = {}
 
 function PANEL:Init()
