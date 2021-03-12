@@ -11,6 +11,11 @@ _print = _print or print
 _Msg = _Msg or Msg
 _MsgC = _MsgC or MsgC
 
+if CLIENT then
+    gfconsole.filter.add("print")
+    gfconsole.filter.add("msg")
+end
+
 local send = gfconsole.send
 
 local translators = {
@@ -84,7 +89,7 @@ local function override()
             local info = debug.getinfo(2)
     
             if not info then
-                send("Print", parse(...))
+                send("print", parse(...))
                 return
             end
         
@@ -95,7 +100,7 @@ local function override()
             prefix = exploded[#exploded]
             prefix = prefix .. ":"  .. info.linedefined
         
-            send("Print", color, prefix , color_white, " -- ", parse(...))
+            send("print", color, prefix , color_white, " -- ", parse(...))
         end
     end
 
@@ -104,8 +109,8 @@ local function override()
             _Msg(...)
             _Msg("\n")
     
-            send("Print", ...)
-            send("Print", "\n")
+            send("print", ...)
+            send("print", "\n")
         end
 
         local function output(tbl, indent, key)
@@ -161,13 +166,13 @@ local function override()
     _G.Msg = function(...)
         _Msg(...)
     
-        send("Msg", ...)
+        send("msg", ...)
     end
     
     _G.MsgC = function(...)
         _MsgC(...)
     
-        send("Msg", ...)
+        send("msg", ...)
     end
 end
 

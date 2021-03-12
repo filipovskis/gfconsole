@@ -23,6 +23,7 @@ load.table({
     },
     client = {
         "libraries/cl_buttons",
+        "libraries/cl_filter",
         "cl_convars",
         "cl_fonts",
         "vgui/button",

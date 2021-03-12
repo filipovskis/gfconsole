@@ -30,10 +30,7 @@ function PANEL:Init()
     self.control:AddPanel(self.selector)
 
     self:LoadButtons()
-
-    self:AddCheckbox("Print")
-    self:AddCheckbox("Msg")
-    self:AddCheckbox("Errors")
+    self:LoadFilters()
 end
 
 function PANEL:PerformLayout(w, h)
@@ -48,9 +45,12 @@ function PANEL:Paint(w, h)
     surface.DrawRect(0, 0, w, h)
 end
 
-function PANEL:AddCheckbox(text)
+function PANEL:AddCheckbox(text, func)
     local checkbox = vgui.Create("GFConsole.Checkbox")
     checkbox:SetText(text)
+    checkbox.OnChange = function(panel, bool)
+        func(bool)
+    end
     
     self.control:AddPanel(checkbox)
 end
@@ -75,6 +75,14 @@ function PANEL:LoadButtons()
         end
 
         self.control:AddPanel(button)
+    end
+end
+
+function PANEL:LoadFilters()
+    for _, id in ipairs(gfconsole.filter.get()) do
+        self:AddCheckbox(id, function()
+            gfconsole.filter.toggle(id)
+        end)
     end
 end
 
