@@ -60,7 +60,7 @@ if SERVER then
         luaerror.EnableClientDetour(true)
 
         hook.Add("LuaError", "gfconsole.Print", function(isruntime, fullerror, sourcefile, sourceline, errorstr, stack)
-            gfconsole.send("error", color, "[ERROR] ", server, errorstr, parse_stack(stack), "\n")
+            gfconsole.send("error", color, "[ERROR] ", server, fullerror, parse_stack(stack), "\n")
         end)
 
         hook.Add("ClientLuaError", "gfconsole.Print", function(ply, fullerror)
