@@ -63,6 +63,8 @@ end
 
 hook.Add("gfconsole.CanPass", "gfconsole.Filters", function(id)
     if id then
-        return filter.check(id)
+        if filter.check(id) == true then
+            return false
+        end
     end
 end)

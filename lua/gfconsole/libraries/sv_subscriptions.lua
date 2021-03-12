@@ -13,6 +13,10 @@ local subscriptions = gfconsole.subscriptions
 local members = {}
 
 function subscriptions.add(ply)
+    if subscriptions.check(ply) then
+        return
+    end
+
     table.insert(members, ply)
 
     hook.Run("gfconsole.SubscriberAdded", ply)

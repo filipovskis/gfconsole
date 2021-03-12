@@ -26,6 +26,7 @@ load.table({
         "libraries/cl_filter",
         "cl_convars",
         "cl_fonts",
+        "cl_menu",
         "vgui/button",
         "vgui/checkbox",
         "vgui/selector",
