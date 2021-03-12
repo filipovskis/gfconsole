@@ -37,8 +37,6 @@ if SERVER then
             packet:AddTargets(recipients)
         packet:Send()
     end
-
-    gfconsole.send(nil, Color(155, 255, 255), "Hello 2")
 else
     local function add(from_server, filter, ...)
         local should_receive = hook.Run("gfconsole.CanPass", filter)

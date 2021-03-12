@@ -58,13 +58,11 @@ function filter.check(id)
 
     if filter.exist(id) then
         return get(id):GetBool()
-    else
-        return false
     end
 end
 
 hook.Add("gfconsole.CanPass", "gfconsole.Filters", function(id)
-    if filter.check(id) then
-        return false
+    if id then
+        return filter.check(id)
     end
 end)
