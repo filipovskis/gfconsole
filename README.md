@@ -1,5 +1,7 @@
 # gfconsole
 
+Garry's Mod (GMOD) friendly developer console
+
 ### Features
 - print, Msg, MsgC and PrintTable are relayed to console
 - Realm switching
