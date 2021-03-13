@@ -10,9 +10,7 @@ Email: tochonement@gmail.com
 if SERVER then
     util.AddNetworkString("gfconsole:Subscribe")
 
-    local function can_subscribe(ply)
-        return ply:IsSuperAdmin()
-    end
+    local can_subscribe = gfconsole.config.can_subscribe
 
     hook.Add("PlayerDisconnected", "gfconsole.subscriptions.Remove", function(ply)
         gfconsole.subscriptions.remove(ply)

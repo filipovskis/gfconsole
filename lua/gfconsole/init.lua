@@ -12,14 +12,17 @@ local load = include("load.lua")
 
 gfconsole.load = load
 gfconsole.net = load.shared("libraries/thirdparty/sh_vnet.lua")
+gfconsole.extensions = {}
 
 load.table({
     shared = {
         "libraries/thirdparty/sh_panel_search",
-        "libraries/sh_message"
+        "libraries/sh_message",
+        "config"
     },
     server = {
-        "libraries/sv_subscriptions"
+        "libraries/sv_subscriptions",
+        "sv_safe"
     },
     client = {
         "libraries/cl_buttons",
@@ -37,5 +40,11 @@ load.table({
 })
 
 for _, extension in ipairs(file.Find(extensions_path .. "*", "LUA")) do
-    load.shared(extensions_path .. extension)
+    local name = string.Explode(".", extension)[1]
+
+    if gfconsole.config.enabled[name] then
+        load.shared(extensions_path .. extension)
+
+        gfconsole.extensions[name] = true
+    end
 end

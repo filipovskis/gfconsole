@@ -8,21 +8,38 @@ Email: tochonement@gmail.com
 --]]
 
 local function show()
-    if gfconsole.frame then
-        return
+    if IsValid(gfconsole.frame) then
+        return 
     end
 
-    local frame = vgui.Create("GFConsole")
-    frame:SetSize(ScrW(), ScrH() * .25)
-    frame.y = 100
-    
-    gfconsole.frame = frame
+    gfconsole.frame = vgui.Create("GFConsole")
 end
+
+function gfconsole.reload_frame()
+    local frame = gfconsole.frame
+
+    if IsValid(frame) then
+        frame:Remove()
+    end
+
+    show()
+end
+
+hook.Add("InitPostEntity", "gfconsole.AutoSubscribe", function()
+    if GetConVar("gfconsole_auto_create") then
+        show()
+    end
+
+    if GetConVar("gfconsole_auto_subcribe"):GetBool() then
+        net.Start("gfconsole:Subscribe")
+            net.WriteBool(true)
+        net.SendToServer()
+    end
+end)
 
 local function toggle(_, cmd)
     if cmd == "+gfconsole" then
         gui.EnableScreenClicker(true)
-        show()
     else
         gui.EnableScreenClicker(false)
     end
