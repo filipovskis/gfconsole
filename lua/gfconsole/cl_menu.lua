@@ -39,6 +39,7 @@ end)
 
 local function toggle(_, cmd)
     if cmd == "+gfconsole" then
+        show()
         gui.EnableScreenClicker(true)
     else
         gui.EnableScreenClicker(false)
