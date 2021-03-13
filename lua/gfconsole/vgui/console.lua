@@ -34,6 +34,15 @@ end
 
 function PANEL:Think()
     self:ResizeController()
+
+    local hide = hook.Call("HUDShouldDraw", GAMEMODE, "gfconsole.Hide")
+    if hide == false then
+        self:SetAlpha(0)
+    else
+        if self:GetAlpha() ~= 255 then
+            self:SetAlpha(255)
+        end
+    end
 end
 
 function PANEL:LoadCookies()
@@ -102,5 +111,3 @@ function PANEL:GetRelativeToCursor()
 end
 
 vgui.Register("GFConsole", PANEL, "EditablePanel")
-
--- gfconsole.reload()
