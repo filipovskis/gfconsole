@@ -12,7 +12,9 @@ if CLIENT then
 end
 
 if SERVER then
-    require("luaerror")
+    if not luaerror then
+        pcall(require, "luaerror")
+    end
 
     local stack_line = "%i. %s - %s:%i"
     local function parse_stack(stack)
