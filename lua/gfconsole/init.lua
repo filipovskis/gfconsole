@@ -39,6 +39,8 @@ load.table({
     }
 })
 
+-- Do not forget to enable extension in config.lua
+
 for _, extension in ipairs(file.Find(extensions_path .. "*", "LUA")) do
     local name = string.Explode(".", extension)[1]
 
