@@ -84,12 +84,23 @@ function PANEL:SavePosition(x, y)
 end
 
 function PANEL:Move(x, y)
+    local x0, y0 = self:GetPos()
+
+    if x <= 0 or x >= (ScrW() - self:GetWide()) then
+        x = x0
+    end
+
+    if y <= 0 or y >= (ScrH() - self:GetTall()) then
+        y = y0
+    end
+    
     self:SetPos(x, y)
     self:SavePosition(x, y)
 end
 
 function PANEL:ResizeController()
     local x, y = self:GetRelativeToCursor()
+    local x2, y2 = input.GetCursorPos()
     local w, h = self:GetSize()
 
     if x > (w - 8) and y > (h - 8) then
@@ -100,6 +111,16 @@ function PANEL:ResizeController()
     end
 
     if self.resizable then
+        local scrw, scrh = ScrW(), ScrH()
+
+        if x < scrw * .1 or x2 > scrw then
+            x = w
+        end
+
+        if y < scrh * .1 or y2 > scrh then
+            y = h
+        end
+
         self:SetSize(x, y)
         self:SaveSize(x, y)
     end
