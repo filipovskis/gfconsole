@@ -86,7 +86,9 @@ function PANEL:Think()
         self.next_update = curtime + 1
     end
 
-    self:MoveController()
+    if gfconsole.holding then
+        self:MoveController()
+    end
 end
 
 -- Custom methods

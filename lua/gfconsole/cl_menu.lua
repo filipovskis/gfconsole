@@ -40,8 +40,10 @@ end)
 local function toggle(_, cmd)
     if cmd == "+gfconsole" then
         show()
+        gfconsole.holding = true
         gui.EnableScreenClicker(true)
     else
+        gfconsole.holding = false
         gui.EnableScreenClicker(false)
     end
 end

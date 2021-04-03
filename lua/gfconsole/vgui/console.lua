@@ -33,7 +33,9 @@ function PANEL:Paint(w, h)
 end
 
 function PANEL:Think()
-    self:ResizeController()
+    if gfconsole.holding then
+        self:ResizeController()
+    end
 
     local hide = hook.Call("HUDShouldDraw", GAMEMODE, "gfconsole.Hide")
     if hide == false then
