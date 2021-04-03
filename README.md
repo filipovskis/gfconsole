@@ -18,7 +18,7 @@ Garry's Mod (GMOD) friendly developer console
 
 ### How to use
 1. Type "bind key +gfconsole" in game console
-2. Press key
+2. Hold key and now you can interact with console
 
 ### Showcase
 ![Screenshot](https://i.imgur.com/dBec2Br.png)
