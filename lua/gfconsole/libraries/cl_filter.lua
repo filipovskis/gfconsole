@@ -20,7 +20,7 @@ end
 function filter.add(id)
     id = string.lower(id)
 
-    CreateClientConVar(name:format(id), "1", true, false)
+    CreateClientConVar(name:format(id), "0", true, false)
 
     table.insert(storage, id)
 end
