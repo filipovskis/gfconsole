@@ -24,3 +24,10 @@ surface.CreateFont("gfconsole.Text", {
     size = 18,
     extended = true
 })
+
+surface.CreateFont("gfconsole.Text.underline", {
+    font = "Roboto",
+    size = 18,
+    extended = true,
+    italic = true
+})

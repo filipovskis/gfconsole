@@ -25,6 +25,19 @@ function PANEL:Init()
     self.richtext = self:Add("RichText")
     self.richtext.PerformLayout = function(panel)
         panel:SetFontInternal("gfconsole.Text")
+        panel:SetUnderlineFont("gfconsole.Text.underline")
+    end
+    self.richtext.ActionSignal = function(panel, name, value)
+        if name == "TextClicked" then
+            local for_copy = string.match(value, "%b@@")
+            if for_copy then
+                for_copy = for_copy:Replace("@", "")
+
+                SetClipboardText(for_copy)
+
+                notification.AddLegacy("Copied", 0, 2)
+            end
+        end
     end
 
     self.control:AddPanel(self.selector)
@@ -63,7 +76,13 @@ end
 function PANEL:AddRecord(...)
     for _, object in ipairs({...}) do
         if isstring(object) then
-            self.richtext:AppendText(object)
+            if object:match("Vector") then
+                self.richtext:InsertClickableTextStart("@" .. object.. "@")
+                    self.richtext:AppendText(object)
+                self.richtext:InsertClickableTextEnd()
+            else
+                self.richtext:AppendText(object)
+            end
         else
             self.richtext:InsertColorChange(object.r, object.g, object.b, object.a)
         end

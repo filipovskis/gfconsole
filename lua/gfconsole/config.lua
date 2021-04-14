@@ -16,7 +16,8 @@ config.enabled = {
     ["errors"] = true,
     ["execute"] = true,
     ["override"] = true,
-    ["subscriptions"] = true
+    ["subscriptions"] = true,
+    ["utility"] = true,
 }
 
 -- Can execute commands to a server console
