@@ -37,6 +37,7 @@ hook.Add("InitPostEntity", "gfconsole.AutoSubscribe", function()
     end
 end)
 
+
 local function toggle(_, cmd)
     if cmd == "+gfconsole" then
         show()
@@ -49,3 +50,4 @@ local function toggle(_, cmd)
 end
 concommand.Add("+gfconsole", toggle)
 concommand.Add("-gfconsole", toggle)
+concommand.Add("gfconsole_reload_frame", gfconsole.reload_frame)

@@ -35,7 +35,7 @@ function PANEL:Init()
 
                 SetClipboardText(for_copy)
 
-                notification.AddLegacy("Copied", 0, 2)
+                notification.AddLegacy("Copied to clipboard!", 0, 2)
             end
         end
     end
@@ -69,7 +69,7 @@ function PANEL:AddCheckbox(text, bool, func)
     checkbox.OnChange = function(panel, bool)
         func(bool)
     end
-    
+
     self.control:AddPanel(checkbox)
 end
 
@@ -77,6 +77,10 @@ function PANEL:AddRecord(...)
     for _, object in ipairs({...}) do
         if isstring(object) then
             if object:match("Vector") then
+                self.richtext:InsertClickableTextStart("@" .. object.. "@")
+                    self.richtext:AppendText(object)
+                self.richtext:InsertClickableTextEnd()
+            elseif object:match("Angle") then
                 self.richtext:InsertClickableTextStart("@" .. object.. "@")
                     self.richtext:AppendText(object)
                 self.richtext:InsertClickableTextEnd()
@@ -111,7 +115,7 @@ function PANEL:LoadFilters()
         self:AddCheckbox(id, not gfconsole.filter.check(id), function()
             gfconsole.filter.toggle(id)
         end)
-    end 
+    end
 end
 
 vgui.Register("GFConsole.Container", PANEL)

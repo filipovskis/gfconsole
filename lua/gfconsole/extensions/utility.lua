@@ -10,22 +10,21 @@ Email: tochonement@gmail.com
 if CLIENT then
     gfconsole.buttons.add("Get position", function()
         local pos = LocalPlayer():GetPos()
-        local ang = LocalPlayer():GetAngles()
-        local output
-    
-        local str_pos = "Vector(%i, %i, %i)"
-        local str_ang = "Angle(%i, %i, %i)"
-    
+
         for _, key in ipairs({"x", "y", "z"}) do
             pos[key] = math.Round(pos[key])
         end
-    
+
+        gfconsole.send(nil, color_white, ("Vector(%i, %i, %i)"):format(pos.x, pos.y, pos.z), "\n")
+    end)
+
+    gfconsole.buttons.add("Get angle", function()
+        local ang = LocalPlayer():GetAngles()
+
         for _, key in ipairs({"p", "y", "r"}) do
             ang[key] = math.Round(ang[key])
         end
-    
-        output = str_pos:format(pos.x, pos.y, pos.z) .. ", " .. str_ang:format(ang.p, ang.y, ang.r)
 
-        gfconsole.send(nil, color_white, output .. "\n")
+        gfconsole.send(nil, color_white, ("Angle(%i, %i, %i)"):format(ang.p, ang.y, ang.r), "\n")
     end)
 end
