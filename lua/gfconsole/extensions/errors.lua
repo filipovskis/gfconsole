@@ -12,53 +12,49 @@ if CLIENT then
 end
 
 if SERVER then
-    if not luaerror then
-        pcall(require, "luaerror")
-    end
+    local success = pcall(require, "luaerror")
 
+    local color = Color(230, 25, 25)
+    local client = Color(215, 241, 165)
+    local server = Color(97, 214, 214)
     local stack_line = "%i. %s - %s:%i"
-    local function parse_stack(stack)
-        local spaces = "\n  "
-        local tbl = {}
-        local counter = 1
-        local parsed = ""
 
-        for _, data in ipairs(stack) do
-            local name = data.name
-            local empty_name = data.name == ""
-            local source = data.source
+    if success then
+        local function parse_stack(stack)
+            local spaces = "\n  "
+            local tbl = {}
+            local counter = 1
+            local parsed = ""
 
-            source = string.Replace(source, "=", "")
-            source = string.Replace(source, "@", "")
+            for _, data in ipairs(stack) do
+                local name = data.name
+                local empty_name = data.name == ""
+                local source = data.source
 
-            if empty_name and source == "[C]" then
-                goto skip
+                source = string.Replace(source, "=", "")
+                source = string.Replace(source, "@", "")
+
+                if empty_name and source == "[C]" then
+                    goto skip
+                end
+
+                table.insert(tbl, stack_line:format(counter, (empty_name and "unknown" or name), source, data.lastlinedefined))
+
+                counter = counter + 1
+
+                ::skip::
             end
 
-            table.insert(tbl, stack_line:format(counter, (empty_name and "unknown" or name), source, data.lastlinedefined))
-            
-            counter = counter + 1
+            for _, str in ipairs(tbl) do
+                parsed = parsed .. spaces .. str
+                spaces = spaces .. " "
+            end
 
-            ::skip::
+            return parsed
         end
-
-        for _, str in ipairs(tbl) do
-            parsed = parsed .. spaces .. str
-            spaces = spaces .. " "
-        end
-
-        return parsed
-    end
-
-    if luaerror then
-        local color = Color(230, 25, 25)
-        local client = Color(215, 241, 165)
-        local server = Color(97, 214, 214)
 
         luaerror.EnableRuntimeDetour(true)
-
         luaerror.EnableCompiletimeDetour(true)
-
         luaerror.EnableClientDetour(true)
 
         hook.Add("LuaError", "gfconsole.Print", function(isruntime, fullerror, sourcefile, sourceline, errorstr, stack)
