@@ -10,8 +10,13 @@ Email: tochonement@gmail.com
 if SERVER then
     util.AddNetworkString("gfconsole:Send")
 
+    local RECOVERY_TIME = 1
+    local MAXIMUM_MESSAGES = 1024
+    local MESSAGES_PER_TICK = 3
+    local queue = {}
+
     local function get_recipients()
-        local all = player.GetAll()
+        local all = player.GetHumans()
         local recipients = {}
 
         for _, ply in ipairs(all) do
@@ -23,21 +28,75 @@ if SERVER then
 
         return recipients
     end
-    
-    function gfconsole.send(filter, ...)
+
+    local function process_queue()
         local recipients = get_recipients()
 
         if table.IsEmpty(recipients) then
+            queue = {}
             return
         end
 
-        local packet = gfconsole.net.CreatePacket("gfconsole:Send")
-            packet:String(filter or "")
-            packet:Table({...})
-            packet:AddTargets(recipients)
-        packet:Send()
+        for i = 1, MESSAGES_PER_TICK do
+            local message = queue[1]
+            if message then
+                local filter = message.filter
+                local data = message.data
+
+                local packet = gfconsole.net.CreatePacket("gfconsole:Send")
+                    packet:String(filter)
+                    packet:Table(data)
+                    packet:AddTargets(recipients)
+                packet:Send()
+
+                table.remove(queue, 1)
+            end
+        end
     end
-else
+
+    local function start_process()
+        gfconsole.process_enabled = true
+
+        hook.Add("Think", "gfconsole.QueueProcess", process_queue)
+    end
+
+    local function stop_process()
+        gfconsole.process_enabled = false
+
+        hook.Remove("Think", "gfconsole.QueueProcess")
+    end
+
+    local function is_queue_filled()
+        return #queue >= MAXIMUM_MESSAGES
+    end
+
+    local function check_queue_overload()
+        if is_queue_filled() then
+            stop_process()
+
+            queue = {}
+
+            timer.Simple(RECOVERY_TIME, start_process)
+        end
+    end
+
+    function gfconsole.send(filter, ...)
+        if gfconsole.process_enabled then
+            filter = filter or ""
+
+            table.insert(queue, {
+                filter = filter,
+                data = {...}
+            })
+
+            check_queue_overload()
+        end
+    end
+
+    start_process()
+end
+
+if CLIENT then
     local function add(from_server, filter, ...)
         local should_receive = hook.Run("gfconsole.CanPass", filter)
         local realm = GetConVar("gfconsole_realm"):GetString()
