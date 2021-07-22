@@ -15,7 +15,7 @@ local config = gfconsole.config
 config.enabled = {
     ["errors"] = true,
     ["execute"] = true,
-    ["override"] = true,
+    ["relay"] = true,
     ["subscriptions"] = true,
     ["utility"] = true,
 }
