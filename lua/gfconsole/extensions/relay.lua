@@ -134,7 +134,7 @@ local new_print_table do
         if isnumber(key) then
             return "[" .. key .. "]"
         else
-            return key
+            return tostring(key)
         end
     end
 
