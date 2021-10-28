@@ -114,7 +114,7 @@ end
 
 local function new_msg(...)
     OldMsg(...)
-    send("msg", ...)
+    send("msg", color_white, ...)
 end
 
 local function new_msgc(...)
