@@ -18,6 +18,7 @@ config.enabled = {
     ["relay"] = true,
     ["subscriptions"] = true,
     ["utility"] = true,
+    ["retry"] = false
 }
 
 -- A customcheck function for access to execute commands
