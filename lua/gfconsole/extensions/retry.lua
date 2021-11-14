@@ -25,6 +25,10 @@ local function retry(ply, file)
 end
 
 hook.Add("ClientLuaError", "gfconsole.ext.retry", function(ply, fullerror)
+    if not fullerror:find("include file") then
+        return
+    end
+
     local f = string.match(fullerror, "%b''", 10):gsub("\\", "/")
     local path = string.match(fullerror, "@[%w./%[%]_]+")
     local where = string.match(path, "%w+")
