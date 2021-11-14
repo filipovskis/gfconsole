@@ -1,4 +1,5 @@
 # gfconsole
+![Test](https://img.shields.io/github/license/tochnonement/gfconsole)
 
 A **user-friendly** developer console for **Garry's Mod**. 
 Makes possible to relay **messages** and **errors** from a **server's console** to developers in-game, so they could develop without interrupting to check a server's control panel.
@@ -31,8 +32,9 @@ Makes possible to relay **messages** and **errors** from a **server's console** 
 4. You're done.
 
 ### 🤔 How to use
-NOTE: You can enable the autocreation of the console by changing convar `gfconsole_autocreate`'s value to true
-NOTE: You can enable the autosubscription to the console by changing convar `gfconsole_autosubcribe`'s value to true
+**NOTE:**
+You can enable the autocreation of the console by changing convar `gfconsole_autocreate`'s value to true.
+You can enable the autosubscription to the console by changing convar `gfconsole_autosubcribe`'s value to true
 
 1. Bind any button to `+gfconsole`
 2. Hold the button to interact with the console
