@@ -41,7 +41,7 @@ You can enable the autosubscription to the console by changing convar `gfconsole
 3. Press the "subscribe" button at the console's top
 
 ### 👀 Showcase
-![Screenshot](https://i.imgur.com/dBec2Br.png)
+![Screenshot](https://i.imgur.com/JPlJnmT.png)
 
 ### 🔗 Credits
 - [thelastpenguin](https://github.com/thelastpenguin) - pON
