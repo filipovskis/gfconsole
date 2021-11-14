@@ -8,11 +8,11 @@ Email: tochnonement@gmail.com
 --]]
 
 hook.Add("InitPostEntity", "gfconsole.AutoSubscribe", function()
-    if GetConVar("gfconsole_auto_create") then
+    if GetConVar("gfconsole_autocreate"):GetBool() then
         gfconsole.show()
     end
 
-    if GetConVar("gfconsole_auto_subcribe"):GetBool() then
+    if GetConVar("gfconsole_autosubcribe"):GetBool() then
         net.Start("gfconsole:Subscribe")
             net.WriteBool(true)
         net.SendToServer()
