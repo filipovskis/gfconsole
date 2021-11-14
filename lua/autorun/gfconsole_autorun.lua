@@ -9,7 +9,8 @@ Email: tochonement@gmail.com
 
 gfconsole = {}
 
-AddCSLuaFile("gfconsole/load.lua")
+AddCSLuaFile("gfconsole/libraries/sh_load.lua")
 AddCSLuaFile("gfconsole/init.lua")
 
+include("gfconsole/libraries/sh_load.lua")
 include("gfconsole/init.lua")

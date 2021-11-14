@@ -2278,4 +2278,4 @@ end
 vnet.versionString = "1.1.5"
 vnet.versionNumber = 1001005
 
-return vnet
+gfconsole.net = vnet
