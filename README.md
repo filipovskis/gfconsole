@@ -40,3 +40,6 @@ NOTE: You can enable the autosubscription to the console by changing convar `gfc
 
 ### 👀 Showcase
 ![Screenshot](https://i.imgur.com/dBec2Br.png)
+
+### 🔗 Credits
+- [thelastpenguin](https://github.com/thelastpenguin) - pON
