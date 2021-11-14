@@ -11,6 +11,9 @@ local GLOBAL = _G
 local send = gfconsole.send
 local color = Color(214, 70, 142)
 
+local color_client = Color(255, 221, 102)
+local color_server = Color(156, 221, 255, 255)
+
 OldPrint = OldPrint or GLOBAL.print
 OldMsg = OldMsg or GLOBAL.Msg
 OldMsgC = OldMsgC or GLOBAL.MsgC
@@ -109,7 +112,7 @@ local function new_print(...)
     prefix = exploded[#exploded]
     prefix = prefix .. ":"  .. info.linedefined
 
-    send_with_space("print", color, prefix , color_white, " -- ", parse_args("  ", ...))
+    send_with_space("print", (SERVER and color_server or color_client), prefix , color_white, " -- ", parse_args("  ", ...))
 end
 
 local function new_msg(...)
@@ -172,3 +175,7 @@ hook.Add("PostGamemodeLoaded", "gfconsole.Relay", function()
     MsgC = new_msgc
     PrintTable = new_print_table
 end)
+print = new_print
+Msg = new_msg
+MsgC = new_msgc
+PrintTable = new_print_table
