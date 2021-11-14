@@ -43,11 +43,10 @@ if SERVER then
                 local filter = message.filter
                 local data = message.data
 
-                local packet = gfconsole.net.CreatePacket("gfconsole:Send")
-                    packet:String(filter)
-                    packet:Table(data)
-                    packet:AddTargets(recipients)
-                packet:Send()
+                net.Start("gfconsole:Send")
+                    net.WriteString(filter)
+                    gfconsole.util.write_pon(data)
+                net.Send(recipients)
 
                 table.remove(queue, 1)
             end
@@ -125,10 +124,10 @@ if CLIENT then
         add(false, filter, ...)
     end
 
-    gfconsole.net.Watch("gfconsole:Send", function(packet)
-        local filter = packet:String()
-        local arguments = packet:Table()
+    net.Receive("gfconsole:Send", function()
+        local filter = net.ReadString()
+        local arguments = gfconsole.util.read_pon()
 
         add(true, filter, unpack(arguments))
-    end, gfconsole.net.OPTION_WATCH_OVERRIDE)
+    end)
 end

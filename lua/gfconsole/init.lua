@@ -8,6 +8,7 @@ Email: tochonement@gmail.com
 --]]
 
 gfconsole.load.Shared("config.lua")
+gfconsole.load.Shared("util.lua")
 gfconsole.load.Folder("gfconsole/libraries/thirdparty")
 gfconsole.load.Folder("gfconsole/libraries")
 gfconsole.load.Folder("gfconsole/core/derma")
