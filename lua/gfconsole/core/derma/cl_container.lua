@@ -12,14 +12,14 @@ PANEL = {}
 function PANEL:Init()
     self.control = self:Add("DHorizontalScroller")
     self.control:SetTall(30)
-    self.control:SetOverlap(-5)
+    self.control:SetOverlap(-2)
 
     self.selector = self:Add("GFConsole.Selector")
     self.selector:SetWide(200)
     self.selector:AddConvar("gfconsole_realm", {
-        {"client", "Client"},
-        {"server", "Server"},
-        {"both", "Both"}
+        {"client", "CLIENT"},
+        {"server", "SERVER"},
+        {"both", "BOTH"}
     })
 
     self.richtext = self:Add("RichText")
@@ -39,6 +39,10 @@ function PANEL:Init()
             end
         end
     end
+    self.richtext.Paint = function(panel, w, h)
+        surface.SetDrawColor(0, 0, 0, 100)
+        surface.DrawRect(0, 0, w, h)
+    end
 
     self.control:AddPanel(self.selector)
 
@@ -53,22 +57,24 @@ end
 function PANEL:PerformLayout(w, h)
     self.control:Dock(TOP)
     self.control:SetTall(25)
+    self.control:DockMargin(0, 0, 0, 5)
 
     self.richtext:Dock(FILL)
 end
 
 function PANEL:Paint(w, h)
-    surface.SetDrawColor(0, 0, 0, 100)
-    surface.DrawRect(0, 0, w, h)
+    -- surface.SetDrawColor(0, 0, 0, 100)
+    -- surface.DrawRect(0, 0, w, h)
 end
 
 function PANEL:AddCheckbox(text, bool, func)
     local checkbox = vgui.Create("GFConsole.Checkbox")
-    checkbox:SetText(text)
+    checkbox:SetText("Filter: " .. text)
     checkbox:SetValue(bool)
     checkbox.OnChange = function(panel, bool)
         func(bool)
     end
+    checkbox:SizeToContentsX(20)
 
     self.control:AddPanel(checkbox)
 end
@@ -96,7 +102,7 @@ end
 function PANEL:AddButton(name, func)
     local button = vgui.Create("gfconsole.Button")
     button:SetText(name)
-    button:SizeToContentsX(10)
+    button:SizeToContentsX(20)
     button.DoClick = function()
         func()
     end

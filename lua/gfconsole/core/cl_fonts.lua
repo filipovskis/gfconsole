@@ -8,26 +8,26 @@ Email: tochonement@gmail.com
 --]]
 
 surface.CreateFont("gfconsole.Title", {
-    font = "Roboto",
+    font = "Roboto Medium",
     size = 18,
     extended = true
 })
 
 surface.CreateFont("gfconsole.Button", {
     font = "Roboto",
-    size = 18,
+    size = 16,
     extended = true
 })
 
 surface.CreateFont("gfconsole.Text", {
     font = "Roboto",
-    size = 18,
+    size = 16,
     extended = true
 })
 
 surface.CreateFont("gfconsole.Text.underline", {
     font = "Roboto",
-    size = 18,
+    size = 16,
     extended = true,
     italic = true
 })

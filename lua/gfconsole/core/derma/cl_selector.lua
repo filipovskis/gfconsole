@@ -20,7 +20,7 @@ end
 
 function PANEL:PaintOver(w, h)
     surface.SetDrawColor(0, 0, 0, 230)
-    surface.DrawOutlinedRect(0, 0, w, h, 1)
+    surface.DrawOutlinedRect(0, 0, w-1, h, 1)
 end
 
 -- Custom methods
@@ -53,7 +53,7 @@ function PANEL:AddOption(text, func)
         if panel.Active then
             surface.SetDrawColor(49, 181, 255)
         else
-            surface.SetDrawColor(78, 84, 96)
+            surface.SetDrawColor(0, 0, 0, 200)
         end
         surface.DrawRect(0, 0, w, h)
     end
@@ -67,9 +67,11 @@ end
 
 function PANEL:SelectOption(panel)
     for _, child in ipairs(self:GetChildren()) do
-        child.Active = false 
+        child:SetTextColor(color_white)
+        child.Active = false
     end
 
+    panel:SetTextColor(color_black)
     panel.Active = true
 end
 

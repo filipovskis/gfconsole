@@ -31,10 +31,10 @@ function PANEL:Init()
     self.label:SizeToContents()
 
     self.fps = self:Add("DLabel")
-    self.fps:SetFont("gfconsole.Title")
+    self.fps:SetFont("gfconsole.Button")
 
     self.ping = self:Add("DLabel")
-    self.ping:SetFont("gfconsole.Title")
+    self.ping:SetFont("gfconsole.Button")
 
     self:SetCursor("sizeall")
 
