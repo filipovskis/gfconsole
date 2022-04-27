@@ -7,12 +7,19 @@ Email: tochnonement@gmail.com
 
 --]]
 
-local success = pcall(require, "win_toast")
+-- Windows notifications
+do
+    local sys_arch = string.sub(jit.arch, 2):gsub("86", "32")
+    local dll_name = "gm" .. (CLIENT and "cl" or "sv") .. "_win_toast_" .. (system.IsWindows() and ("win" .. sys_arch) or system.IsLinux() and ("linux" .. sys_arch) or "osx") .. ".dll"
+    local dll_exists = file.Exists("lua/bin/" .. dll_name, "MOD")
 
-net.Receive("gfconsole:SendWinNotify", function()
-    local text = net.ReadString()
+    if dll_exists then
+        require("win_toast")
 
-    if success then
-        WinToast.Show("GFConsole", text)
+        net.Receive("gfconsole:SendWinNotify", function()
+            WinToast.Show("GFConsole", net.ReadString())
+        end)
+    else
+        net.Receive("gfconsole:SendWinNotify", function() end)
     end
-end)
+end
