@@ -7,9 +7,7 @@ Email: tochonement@gmail.com
 
 --]]
 
-if CLIENT then
-    gfconsole.filter.add("error")
-end
+gfconsole.FILTER_ERRORS = gfconsole.FILTER_ERRORS or gfconsole.filter.create("Errors")
 
 if SERVER then
     local success = pcall(require, "luaerror")
@@ -58,11 +56,11 @@ if SERVER then
         luaerror.EnableClientDetour(true)
 
         hook.Add("LuaError", "gfconsole.Print", function(isruntime, fullerror, sourcefile, sourceline, errorstr, stack)
-            gfconsole.send("error", color, "[ERROR] ", server, fullerror, parse_stack(stack), "\n")
+            gfconsole.send(gfconsole.FILTER_ERRORS, color, "[ERROR] ", server, fullerror, parse_stack(stack), "\n")
         end)
 
         hook.Add("ClientLuaError", "gfconsole.Print", function(ply, fullerror)
-            gfconsole.send("error", color, "[ERROR] (", ply:Name(), ") ", client, fullerror, "\n")
+            gfconsole.send(gfconsole.FILTER_ERRORS, color, "[ERROR] (", ply:Name(), ") ", client, fullerror, "\n")
         end)
     end
 end

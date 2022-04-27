@@ -69,7 +69,7 @@ end
 
 function PANEL:AddCheckbox(text, bool, func)
     local checkbox = vgui.Create("GFConsole.Checkbox")
-    checkbox:SetText("Filter: " .. text)
+    checkbox:SetText("Show: " .. text)
     checkbox:SetValue(bool)
     checkbox.OnChange = function(panel, bool)
         func(bool)
@@ -117,9 +117,9 @@ function PANEL:LoadButtons()
 end
 
 function PANEL:LoadFilters()
-    for _, id in ipairs(gfconsole.filter.get()) do
-        self:AddCheckbox(id, not gfconsole.filter.check(id), function()
-            gfconsole.filter.toggle(id)
+    for _, data in ipairs(gfconsole.filter.get_all()) do
+        self:AddCheckbox(data.id, data.cv:GetBool(), function()
+            gfconsole.filter.toggle(data.id)
         end)
     end
 end

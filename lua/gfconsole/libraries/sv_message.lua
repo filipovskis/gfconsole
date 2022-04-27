@@ -44,7 +44,6 @@ end
 local process_queue do
     local net_Start = net.Start
     local net_Send = net.Send
-    local net_WriteString = net.WriteString
     local net_WriteUInt = net.WriteUInt
     local net_WriteData = net.WriteData
     local table_remove = table.remove
@@ -67,7 +66,7 @@ local process_queue do
                 local length = #encoded
 
                 net_Start("gfconsole:Send")
-                    net_WriteString(filter)
+                    net_WriteUInt(filter, gfconsole.filter.bits)
                     net_WriteUInt(length, 16)
                     net_WriteData(encoded)
                 net_Send(recipients)
@@ -107,7 +106,7 @@ end
 
 function gfconsole.send(filter, ...)
     if gfconsole.process_enabled then
-        filter = filter or ""
+        filter = filter or 0
 
         count = count + 1
         queue[count] = {

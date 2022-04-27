@@ -9,7 +9,6 @@ Email: tochonement@gmail.com
 
 local GLOBAL = _G
 local send = gfconsole.send
-local color = Color(214, 70, 142)
 
 local color_client = Color(255, 221, 102)
 local color_server = Color(156, 221, 255, 255)
@@ -19,10 +18,8 @@ OldMsg = OldMsg or GLOBAL.Msg
 OldMsgC = OldMsgC or GLOBAL.MsgC
 OldPrintTable = OldPrintTable or GLOBAL.PrintTable
 
-if CLIENT then
-    gfconsole.filter.add("print")
-    gfconsole.filter.add("msg")
-end
+gfconsole.FILTER_PRINT = gfconsole.FILTER_PRINT or gfconsole.filter.create("Print")
+gfconsole.FILTER_MSG = gfconsole.FILTER_MSG or gfconsole.filter.create("Etc")
 
 local function send_with_space(filter, ...)
     send(filter, ...)
@@ -101,7 +98,7 @@ local function new_print(...)
     local info = debug.getinfo(2)
 
     if not info then
-        send_with_space("print", color_white, parse_args("  ", ...))
+        send_with_space(gfconsole.FILTER_PRINT, color_white, parse_args("  ", ...))
         return
     end
 
@@ -112,17 +109,17 @@ local function new_print(...)
     prefix = exploded[#exploded]
     prefix = prefix .. ":"  .. info.linedefined
 
-    send_with_space("print", (SERVER and color_server or color_client), prefix , color_white, " -- ", parse_args("  ", ...))
+    send_with_space(gfconsole.FILTER_PRINT, (SERVER and color_server or color_client), prefix , color_white, " -- ", parse_args("  ", ...))
 end
 
 local function new_msg(...)
     OldMsg(...)
-    send("msg", color_white, ...)
+    send(gfconsole.FILTER_MSG, color_white, ...)
 end
 
 local function new_msgc(...)
     OldMsgC(...)
-    send("msg", ...)
+    send(gfconsole.FILTER_MSG, ...)
 end
 
 local new_print_table do
@@ -169,13 +166,12 @@ local new_print_table do
     end
 end
 
-hook.Add("PostGamemodeLoaded", "gfconsole.Relay", function()
+local function override()
     print = new_print
     Msg = new_msg
     MsgC = new_msgc
     PrintTable = new_print_table
-end)
-print = new_print
-Msg = new_msg
-MsgC = new_msgc
-PrintTable = new_print_table
+end
+
+override()
+hook.Add("PostGamemodeLoaded", "gfconsole.Relay", override)

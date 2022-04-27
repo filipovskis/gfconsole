@@ -43,14 +43,13 @@ function gfconsole.send(filter, ...)
 end
 
 do
-    local net_ReadString = net.ReadString
     local net_ReadUInt = net.ReadUInt
     local net_ReadData = net.ReadData
     local pon_decode = pon.decode
     local unpack = unpack
 
     net.Receive("gfconsole:Send", function()
-        local filter = net_ReadString()
+        local filter = net_ReadUInt(gfconsole.filter.bits)
         local length = net_ReadUInt(16)
         local data = net_ReadData(length)
         local decoded = pon_decode(data)
