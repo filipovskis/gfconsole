@@ -29,6 +29,7 @@ function gfconsole.filter.create(identifier)
 
     return index
 end
+gfconsole.filter.add = gfconsole.filter.create
 
 function gfconsole.filter.get(index)
     return storage[index]
