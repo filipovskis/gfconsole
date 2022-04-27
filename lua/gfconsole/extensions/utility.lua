@@ -7,24 +7,25 @@ Email: tochonement@gmail.com
 
 --]]
 
-if CLIENT then
-    gfconsole.buttons.add("Get position", function()
-        local pos = LocalPlayer():GetPos()
+if SERVER then return end
 
-        for _, key in ipairs({"x", "y", "z"}) do
-            pos[key] = math.Round(pos[key])
-        end
+local color1 = Color(52, 152, 219)
+local color2 = Color(142, 68, 173)
 
-        gfconsole.send(nil, color_white, ("Vector(%i, %i, %i)"):format(pos.x, pos.y, pos.z), "\n")
-    end)
+gfconsole.buttons.add("Get Pos/Ang", function()
+    local pos = LocalPlayer():GetPos()
+    local ang = LocalPlayer():GetAngles()
 
-    gfconsole.buttons.add("Get angle", function()
-        local ang = LocalPlayer():GetAngles()
+    for _, key in ipairs({"p", "y", "r"}) do
+        ang[key] = math.Round(ang[key])
+    end
 
-        for _, key in ipairs({"p", "y", "r"}) do
-            ang[key] = math.Round(ang[key])
-        end
+    for _, key in ipairs({"x", "y", "z"}) do
+        pos[key] = math.Round(pos[key])
+    end
 
-        gfconsole.send(nil, color_white, ("Angle(%i, %i, %i)"):format(ang.p, ang.y, ang.r), "\n")
-    end)
-end
+    local vecStr = ("Vector(%i, %i, %i)"):format(pos.x, pos.y, pos.z)
+    local angStr = ("Angle(%i, %i, %i)"):format(ang.p, ang.y, ang.r)
+
+    gfconsole.send(nil, color_white, color1, vecStr, ' ', color2, angStr, "\n")
+end)
