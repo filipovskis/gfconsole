@@ -46,7 +46,8 @@ function PANEL:Init()
 
     self.control:AddPanel(self.selector)
 
-    self:AddButton("Clear", function()
+    self:AddIconButton("icon16/cog.png", gfconsole.show_settings)
+    self:AddIconButton("icon16/page_white.png", function()
         self.richtext:SetText("")
     end)
 
@@ -105,8 +106,32 @@ function PANEL:AddButton(name, func)
     local button = vgui.Create("gfconsole.Button")
     button:SetText(name)
     button:SizeToContentsX(20)
+    button:SetExpensiveShadow(1, color_black)
     button.DoClick = function()
         func()
+    end
+
+    self.control:AddPanel(button)
+end
+
+function PANEL:AddIconButton(matPath, func)
+    local mat = Material(matPath)
+    local button = vgui.Create("gfconsole.Button")
+    button:SetWide(self.control:GetTall())
+    button:SetText("")
+    button.DoClick = function()
+        func()
+    end
+    button.PaintOver = function(p, w, h)
+        -- local iw, ih = h * .5, h * .5
+        local iw, ih = 16, 16
+        local ix, iy = w * .5 - iw * .5, h * .5 - ih * .5
+
+        surface.SetMaterial(mat)
+        surface.SetDrawColor(color_black)
+        surface.DrawTexturedRect(ix, iy + 1, iw, ih)
+        surface.SetDrawColor(color_white)
+        surface.DrawTexturedRect(ix, iy, iw, ih)
     end
 
     self.control:AddPanel(button)

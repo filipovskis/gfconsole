@@ -21,6 +21,7 @@ surface.CreateFont("gfconsole.Button", {
 
 surface.CreateFont("gfconsole.Text", {
     font = "Roboto",
+    shadow = true,
     size = 16,
     extended = true
 })
@@ -28,6 +29,7 @@ surface.CreateFont("gfconsole.Text", {
 surface.CreateFont("gfconsole.Text.underline", {
     font = "Roboto",
     size = 16,
+    shadow = true,
     extended = true,
     italic = true
 })
