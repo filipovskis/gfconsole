@@ -54,6 +54,7 @@ local process_queue do
 
         if amount < 1 then
             queue = {}
+            count = 0
             return
         end
 
@@ -99,6 +100,7 @@ local function check_queue_overload()
         stop_process()
 
         queue = {}
+        count = 0
 
         timer.Simple(RECOVERY_TIME, start_process)
     end
