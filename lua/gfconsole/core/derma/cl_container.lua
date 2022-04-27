@@ -106,7 +106,6 @@ function PANEL:AddButton(name, func)
     local button = vgui.Create("gfconsole.Button")
     button:SetText(name)
     button:SizeToContentsX(20)
-    button:SetExpensiveShadow(1, color_black)
     button.DoClick = function()
         func()
     end

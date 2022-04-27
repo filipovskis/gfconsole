@@ -30,11 +30,18 @@ function PANEL:Init()
     self.label:SetTextColor(color_white)
     self.label:SizeToContents()
 
+    self.lblVersion = self:Add("DLabel")
+    self.lblVersion:SetText(gfconsole.__VERSION)
+    self.lblVersion:SetFont("gfconsole.Tiny")
+    self.lblVersion:SetTextColor(gfconsole.config.color)
+    self.lblVersion:SizeToContents()
+    self.lblVersion:SetContentAlignment(7)
+
     self.fps = self:Add("DLabel")
-    self.fps:SetFont("gfconsole.Button")
+    self.fps:SetFont("gfconsole.Tiny")
 
     self.ping = self:Add("DLabel")
-    self.ping:SetFont("gfconsole.Button")
+    self.ping:SetFont("gfconsole.Tiny")
 
     self:SetCursor("sizeall")
 
@@ -44,6 +51,9 @@ end
 function PANEL:PerformLayout(w, h)
     self.label:Dock(LEFT)
     self.label:DockMargin(5, 0, 0, 0)
+
+    self.lblVersion:Dock(LEFT)
+    self.lblVersion:DockMargin(5, 5, 0, 0)
 
     self.fps:Dock(RIGHT)
     self.fps:DockMargin(0, 0, 5, 0)

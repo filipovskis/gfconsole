@@ -51,7 +51,7 @@ function PANEL:AddOption(text, func)
     button:Dock(LEFT)
     button.Paint = function(panel, w, h)
         if panel.Active then
-            surface.SetDrawColor(49, 181, 255)
+            surface.SetDrawColor(gfconsole.config.color)
         else
             surface.SetDrawColor(0, 0, 0, 200)
         end

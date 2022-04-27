@@ -12,7 +12,7 @@ local function scale(int)
 end
 
 surface.CreateFont("gfconsole.Title", {
-    font = "Roboto Medium",
+    font = "Roboto Bold",
     size = scale(18),
     extended = true
 })
@@ -20,6 +20,12 @@ surface.CreateFont("gfconsole.Title", {
 surface.CreateFont("gfconsole.Button", {
     font = "Roboto",
     size = scale(16),
+    extended = true
+})
+
+surface.CreateFont("gfconsole.Tiny", {
+    font = "Roboto",
+    size = scale(14),
     extended = true
 })
 

@@ -12,6 +12,7 @@ PANEL = {}
 function PANEL:Init()
     self:SetTextColor(color_white)
     self:SetFont("gfconsole.Button")
+    self:SetExpensiveShadow(1, color_black)
 end
 
 function PANEL:Paint(w, h)

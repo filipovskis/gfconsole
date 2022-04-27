@@ -57,7 +57,7 @@ function PANEL:LoadCookies()
 
         self:SetPos(pos.x * scrw, pos.y * scrh)
     end
-    
+
     if size then
         size = util.JSONToTable(size)
 

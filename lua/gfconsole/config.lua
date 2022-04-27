@@ -30,6 +30,9 @@ config.fonts = {
     "Courier New"
 }
 
+-- Accent colors
+config.color = Color(39, 174, 96)
+
 -- A customcheck function for access to execute commands
 -- Be aware that this is dangerous
 config.can_execute = function(ply)
