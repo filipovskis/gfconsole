@@ -33,9 +33,9 @@ end
 initFonts()
 
 local buildFont do
-    local cvFontFamily = CreateClientConVar("gfconsole_font_family", "Roboto")
-    local cvFontSize = CreateClientConVar("gfconsole_font_size", "16")
-    local cvFontShadow = CreateClientConVar("gfconsole_font_shadow", "1")
+    local cvFontFamily = CreateClientConVar("cl_gfconsole_font_family", "Roboto")
+    local cvFontSize = CreateClientConVar("cl_gfconsole_font_size", "16")
+    local cvFontShadow = CreateClientConVar("cl_gfconsole_font_shadow", "1")
 
     function buildFont()
         local family = cvFontFamily:GetString()
@@ -59,9 +59,9 @@ local buildFont do
     end
 
     buildFont()
-    cvars.AddChangeCallback("gfconsole_font_family", buildFont)
-    cvars.AddChangeCallback("gfconsole_font_size", buildFont)
-    cvars.AddChangeCallback("gfconsole_font_shadow", buildFont)
+    cvars.AddChangeCallback("cl_gfconsole_font_family", buildFont)
+    cvars.AddChangeCallback("cl_gfconsole_font_size", buildFont)
+    cvars.AddChangeCallback("cl_gfconsole_font_shadow", buildFont)
 end
 
 hook.Add("OnScreenSizeChanged", "gfconsole.UpdateFonts", function()

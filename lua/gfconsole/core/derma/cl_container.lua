@@ -16,7 +16,7 @@ function PANEL:Init()
 
     self.selector = self:Add("GFConsole.Selector")
     self.selector:SetWide(200)
-    self.selector:AddConvar("gfconsole_realm", {
+    self.selector:AddConvar("cl_gfconsole_realm", {
         {"client", "CLIENT"},
         {"server", "SERVER"},
         {"both", "BOTH"}

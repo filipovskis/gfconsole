@@ -7,7 +7,7 @@ Email: tochonement@gmail.com
 
 --]]
 
-CreateClientConVar("gfconsole_realm", "both", true, false)
-CreateClientConVar("gfconsole_autosubcribe", "0", true, false)
-CreateClientConVar("gfconsole_autocreate", "0", true, false)
-CreateClientConVar("gfconsole_timestamps", "0", true, false)
+CreateClientConVar("cl_gfconsole_realm", "both", true, false)
+CreateClientConVar("cl_gfconsole_auto_subscribe", "0", true, false)
+CreateClientConVar("cl_gfconsole_auto_open", "0", true, false)
+CreateClientConVar("cl_gfconsole_timestamps", "0", true, false)

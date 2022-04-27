@@ -148,13 +148,13 @@ do
         end
 
         title(plist, 'Frame')
-        checkbox(plist, 'Automatically create console on join', GetConVar('gfconsole_autocreate'))
-        checkbox(plist, 'Automatically subscribe on join', GetConVar('gfconsole_autosubcribe'))
-        checkbox(plist, 'Display timestamps', GetConVar('gfconsole_timestamps'))
+        checkbox(plist, 'Automatically create console on join', GetConVar('cl_gfconsole_auto_open'))
+        checkbox(plist, 'Automatically subscribe on join', GetConVar('cl_gfconsole_auto_subscribe'))
+        checkbox(plist, 'Display timestamps', GetConVar('cl_gfconsole_timestamps'))
 
         title(plist, 'Font')
         do
-            local cv = GetConVar('gfconsole_font_family')
+            local cv = GetConVar('cl_gfconsole_font_family')
             local found = false
 
             local combo = plist:Add('DComboBox')
@@ -182,11 +182,11 @@ do
             slider:SetDecimals(0)
             slider:SetMin(14)
             slider:SetMax(64)
-            slider:SetConVar('gfconsole_font_size')
+            slider:SetConVar('cl_gfconsole_font_size')
             slider:Dock(TOP)
             slider:DockMargin(0, 0, 0, ScreenScale(2))
 
-            checkbox(plist, 'Shadow', GetConVar('gfconsole_font_shadow'))
+            checkbox(plist, 'Shadow', GetConVar('cl_gfconsole_font_shadow'))
         end
 
         title(plist, 'Actions')

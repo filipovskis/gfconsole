@@ -10,6 +10,8 @@ Email: tochnonement@gmail.com
 local add_message do
     local Run = hook.Run
     local GetConVar = GetConVar
+    local select = select
+
     local color_gray = Color(200, 200, 200)
 
     function add_message(from_server, filter, ...)
@@ -19,7 +21,7 @@ local add_message do
 
         local container = frame.panel
         local should_receive = Run("gfconsole.CanPass", filter)
-        local realm = GetConVar("gfconsole_realm"):GetString()
+        local realm = GetConVar("cl_gfconsole_realm"):GetString()
 
         if should_receive == false then
             return
@@ -35,7 +37,7 @@ local add_message do
             end
         end
 
-        if GetConVar("gfconsole_timestamps"):GetBool() then
+        if GetConVar("cl_gfconsole_timestamps"):GetBool() then
             if select(1, ...) ~= "\n" then
                 container:AddRecord(color_gray, os.date("[%H:%M:%S] "), ...)
             else

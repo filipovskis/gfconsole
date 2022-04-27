@@ -19,7 +19,7 @@ end
 function gfconsole.filter.create(identifier)
     count = count + 1
     local index = count
-    local cvName = "gfconsole_show_" .. identifier
+    local cvName = "cl_gfconsole_show_" .. identifier
 
     storage[index] = SERVER and identifier or {
         index = index,
