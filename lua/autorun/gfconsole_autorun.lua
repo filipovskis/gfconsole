@@ -8,7 +8,7 @@ Email: tochonement@gmail.com
 --]]
 
 gfconsole = {
-    __VERSION = '1.4.1'
+    __VERSION = '1.4.2'
 }
 
 AddCSLuaFile("gfconsole/libraries/sh_load.lua")
