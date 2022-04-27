@@ -40,8 +40,20 @@ function PANEL:Init()
     self.fps = self:Add("DLabel")
     self.fps:SetFont("gfconsole.Tiny")
 
+    self.lblFps = self:Add("DLabel")
+    self.lblFps:SetFont("gfconsole.Tiny")
+    self.lblFps:SetText("AVG Framerate: ")
+    self.lblFps:SetTextColor(gfconsole.config.color)
+    self.lblFps:SizeToContents()
+
     self.ping = self:Add("DLabel")
     self.ping:SetFont("gfconsole.Tiny")
+
+    self.lblPing = self:Add("DLabel")
+    self.lblPing:SetFont("gfconsole.Tiny")
+    self.lblPing:SetText("AVG Ping: ")
+    self.lblPing:SetTextColor(gfconsole.config.color)
+    self.lblPing:SizeToContents()
 
     self:SetCursor("sizeall")
 
@@ -55,9 +67,11 @@ function PANEL:PerformLayout(w, h)
     self.lblVersion:Dock(LEFT)
     self.lblVersion:DockMargin(5, 5, 0, 0)
 
+    self.lblFps:Dock(RIGHT)
     self.fps:Dock(RIGHT)
     self.fps:DockMargin(0, 0, 5, 0)
 
+    self.lblPing:Dock(RIGHT)
     self.ping:Dock(RIGHT)
     self.ping:DockMargin(0, 0, 5, 0)
 end
@@ -85,15 +99,15 @@ function PANEL:Think()
     self:UpdateCollected()
 
     if (self.next_update or 0) <= curtime then
-        self.fps:SetText(string.format("AVG Framerate: %i", get_average(self.collected.fps)))
+        self.fps:SetText(math.Round(get_average(self.collected.fps)))
         self.fps:SizeToContentsX()
 
-        self.ping:SetText(string.format("AVG Ping: %i", get_average(self.collected.ping)))
+        self.ping:SetText(math.Round(get_average(self.collected.ping)) .. "ms")
         self.ping:SizeToContentsX()
 
         self:ResetCollected()
 
-        self.next_update = curtime + 1
+        self.next_update = curtime + .8
     end
 
     if gfconsole.holding then
