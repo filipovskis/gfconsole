@@ -19,13 +19,28 @@ end
 function gfconsole.filter.create(identifier)
     count = count + 1
     local index = count
+    local cvName = "gfconsole_show_" .. identifier
 
     storage[index] = SERVER and identifier or {
         index = index,
         id = identifier,
-        cv = CreateClientConVar("gfconsole_show_" .. identifier, "1", true, false)
+        cv = CreateClientConVar(cvName, "1", true, false)
     }
     gfconsole.filter.bits = count_bits(count)
+
+    if CLIENT then
+        cvars.AddChangeCallback(cvName, function(convar_name, value_old, value_new)
+            local frame = gfconsole.frame
+            if IsValid(frame) then
+                for _, panel in ipairs(frame.panel.control.Panels) do
+                    if panel.ClassName == "GFConsole.Checkbox" and panel.cv:GetName() == convar_name then
+                        panel:SetValue(tobool(value_new))
+                        break
+                    end
+                end
+            end
+        end)
+    end
 
     return index
 end
