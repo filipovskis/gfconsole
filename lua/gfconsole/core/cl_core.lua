@@ -66,7 +66,7 @@ do
     local function checkbox(list, text, cvar)
         local label = list:Add('DCheckBoxLabel')
         label:SetText(text)
-        label:SetFont('gfconsole.Title')
+        label:SetFont('gfconsole.Button')
         label:Dock(TOP)
         label:DockMargin(0, 0, 0, ScreenScale(2))
         label:SetConVar(cvar:GetName())
