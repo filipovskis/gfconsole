@@ -18,3 +18,10 @@ hook.Add("InitPostEntity", "gfconsole.AutoSubscribe", function()
         net.SendToServer()
     end
 end)
+
+hook.Add("OnScreenSizeChanged", "gfconsole.Adapt", function()
+    local frame = gfconsole.frame
+    if IsValid(frame) then
+        frame:LoadCookies()
+    end
+end)

@@ -10,22 +10,17 @@ Email: tochonement@gmail.com
 local function get_average(tbl)
     local count = #tbl
     local sum = 0
-    local result
-
-    for _, value in ipairs(tbl) do
-        sum = sum + value
+    for i = 1, count do
+        sum = sum + tbl[i]
     end
-
-    result = sum / count
-
-    return result
+    return sum / count
 end
 
 PANEL = {}
 
 function PANEL:Init()
     self.label = self:Add("DLabel")
-    self.label:SetText("Developer Console")
+    self.label:SetText("GFConsole")
     self.label:SetFont("gfconsole.Title")
     self.label:SetTextColor(color_white)
     self.label:SizeToContents()

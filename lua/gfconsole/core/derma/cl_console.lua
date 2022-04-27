@@ -93,7 +93,7 @@ function PANEL:Move(x, y)
     if y <= 0 or y >= (ScrH() - self:GetTall()) then
         y = y0
     end
-    
+
     self:SetPos(x, y)
     self:SavePosition(x, y)
 end

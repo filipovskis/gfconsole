@@ -11,30 +11,33 @@ local function scale(int)
     return math.ceil(int / 900 * ScrH())
 end
 
-surface.CreateFont("gfconsole.Title", {
-    font = "Roboto Bold",
-    size = scale(18),
-    extended = true
-})
+local function initFonts()
+    surface.CreateFont("gfconsole.Title", {
+        font = "Roboto Bold",
+        size = scale(18),
+        extended = true
+    })
 
-surface.CreateFont("gfconsole.Button", {
-    font = "Roboto",
-    size = scale(16),
-    extended = true
-})
+    surface.CreateFont("gfconsole.Button", {
+        font = "Roboto",
+        size = scale(16),
+        extended = true
+    })
 
-surface.CreateFont("gfconsole.Tiny", {
-    font = "Roboto",
-    size = scale(14),
-    extended = true
-})
+    surface.CreateFont("gfconsole.Tiny", {
+        font = "Roboto",
+        size = scale(14),
+        extended = true
+    })
+end
+initFonts()
 
-do
+local buildFont do
     local cvFontFamily = CreateClientConVar("gfconsole_font_family", "Roboto")
     local cvFontSize = CreateClientConVar("gfconsole_font_size", "16")
     local cvFontShadow = CreateClientConVar("gfconsole_font_shadow", "1")
 
-    local function buildFont()
+    function buildFont()
         local family = cvFontFamily:GetString()
         local size = scale(cvFontSize:GetInt())
         local shadow = cvFontShadow:GetBool()
@@ -60,3 +63,8 @@ do
     cvars.AddChangeCallback("gfconsole_font_size", buildFont)
     cvars.AddChangeCallback("gfconsole_font_shadow", buildFont)
 end
+
+hook.Add("OnScreenSizeChanged", "gfconsole.UpdateFonts", function()
+    initFonts()
+    buildFont()
+end)
