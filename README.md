@@ -8,6 +8,7 @@ Makes possible to relay **messages** and **errors** from a **server's console** 
 - Server console messages are relaying to the console
   - `print` is supported
   - `Msg` is supported
+  - `MsgN` is supported
   - `MsgC` is supported
   - `PrintTable` is supported
 - Errors are relaying to the console
@@ -33,15 +34,15 @@ Makes possible to relay **messages** and **errors** from a **server's console** 
 
 ### 🤔 How to use
 **NOTE:**
-You can enable the autocreation of the console by changing convar `gfconsole_autocreate`'s value to true.
-You can enable the autosubscription to the console by changing convar `gfconsole_autosubcribe`'s value to true
+You can configure console up to your preferences, just type `gfconsole_settings` in the game console.
 
 1. Bind any button to `+gfconsole`
 2. Hold the button to interact with the console
 3. Press the "subscribe" button at the console's top
 
 ### 👀 Showcase
-![Screenshot](https://i.imgur.com/JPlJnmT.png)
+![Screenshot](https://i.imgur.com/pHBys67.png)
+![Settings](https://i.imgur.com/d53vmVV.png)
 
 ### 🔗 Credits
 - [thelastpenguin](https://github.com/thelastpenguin) - pON
