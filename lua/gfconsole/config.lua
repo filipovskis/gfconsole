@@ -18,6 +18,7 @@ config.enabled = {
     ["relay"]           = true,
     ["subscriptions"]   = true,
     ["utility"]         = true,
+    ["bot"]             = true,
     ["retry"]           = false
 }
 

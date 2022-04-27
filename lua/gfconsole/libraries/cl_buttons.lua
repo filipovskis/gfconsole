@@ -13,8 +13,11 @@ local buttons = gfconsole.buttons
 local storage = {}
 
 function buttons.add(name, func)
-    if buttons.exist(name) then
-        return
+    for _, data in ipairs(storage) do
+        if data.name == name then
+            data.func = func
+            return
+        end
     end
 
     table.insert(storage, {
@@ -26,7 +29,7 @@ end
 function buttons.exist(name)
     for _, data in ipairs(storage) do
         if data.name == name then
-            return true 
+            return true
         end
     end
 
