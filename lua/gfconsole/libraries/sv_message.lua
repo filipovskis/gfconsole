@@ -12,7 +12,7 @@ util.AddNetworkString("gfconsole:Send")
 local RECOVERY_TIME = 1
 local MAXIMUM_MESSAGES = 1024
 local MESSAGES_PER_TICK = 3
-local queue, count = {}, 0
+local queue = {}
 
 local get_recipients do
     local GetHumans = player.GetHumans
@@ -54,7 +54,6 @@ local process_queue do
 
         if amount < 1 then
             queue = {}
-            count = 0
             return
         end
 
@@ -73,7 +72,6 @@ local process_queue do
                 net_Send(recipients)
 
                 table_remove(queue, 1)
-                count = count - 1
             end
         end
     end
@@ -100,23 +98,25 @@ local function check_queue_overload()
         stop_process()
 
         queue = {}
-        count = 0
 
         timer.Simple(RECOVERY_TIME, start_process)
     end
 end
 
-function gfconsole.send(filter, ...)
-    if gfconsole.process_enabled then
-        filter = filter or 0
+do
+    local insert = table.insert
 
-        count = count + 1
-        queue[count] = {
-            filter = filter,
-            data = {...}
-        }
+    function gfconsole.send(filter, ...)
+        if gfconsole.process_enabled then
+            filter = filter or 0
 
-        check_queue_overload()
+            insert(queue, {
+                filter = filter,
+                data = {...}
+            })
+
+            check_queue_overload()
+        end
     end
 end
 
