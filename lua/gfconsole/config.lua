@@ -21,6 +21,15 @@ config.enabled = {
     ["retry"] = false
 }
 
+-- The list of available fonts
+config.fonts = {
+    "Roboto",
+    "Roboto Condensed",
+    "Arial",
+    "Tahoma",
+    "Courier New"
+}
+
 -- A customcheck function for access to execute commands
 -- Be aware that this is dangerous
 config.can_execute = function(ply)

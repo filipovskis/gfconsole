@@ -92,6 +92,7 @@ do
         frame:SetSize(ScrW() * .25, ScrH() * .5)
         frame:SetIcon('icon16/cog.png')
         frame:Center()
+        frame:MakePopup()
 
         local plist = frame:Add('DScrollPanel')
         plist:Dock(FILL)
@@ -106,6 +107,43 @@ do
         checkbox(plist, 'Automatically create console on join', GetConVar('gfconsole_autocreate'))
         checkbox(plist, 'Automatically subscribe on join', GetConVar('gfconsole_autosubcribe'))
 
+        title(plist, 'Font')
+        do
+            local cv = GetConVar('gfconsole_font_family')
+            local found = false
+
+            local combo = plist:Add('DComboBox')
+            combo:Dock(TOP)
+            combo:DockMargin(0, 0, 0, ScreenScale(2))
+
+            for _, family in ipairs(gfconsole.config.fonts) do
+                local index = combo:AddChoice(family)
+                if cv:GetString() == family then
+                    combo:ChooseOptionID(index)
+                    found = true
+                end
+            end
+
+            combo.OnSelect = function(p, index, value)
+                cv:SetString(value)
+            end
+
+            if not found then
+                combo:SetText(cv:GetString())
+            end
+
+            local slider = plist:Add('DNumSlider')
+            slider:SetText('Size')
+            slider:SetDecimals(0)
+            slider:SetMin(14)
+            slider:SetMax(64)
+            slider:SetConVar('gfconsole_font_size')
+            slider:Dock(TOP)
+            slider:DockMargin(0, 0, 0, ScreenScale(2))
+
+            checkbox(plist, 'Shadow', GetConVar('gfconsole_font_shadow'))
+        end
+
         title(plist, 'Actions')
         button(plist, 'Reload Console', function()
             gfconsole.reload_frame()
@@ -116,4 +154,5 @@ do
 
         return frame
     end
+    concommand.Add('gfconsole_settings', gfconsole.show_settings)
 end
