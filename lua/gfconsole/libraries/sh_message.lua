@@ -97,9 +97,13 @@ end
 
 if CLIENT then
     local function add(from_server, filter, ...)
+        local frame = gfconsole.frame
+
+        if not IsValid(frame) then return end
+
+        local container = frame.panel
         local should_receive = hook.Run("gfconsole.CanPass", filter)
         local realm = GetConVar("gfconsole_realm"):GetString()
-        local arguments = {...}
 
         if should_receive == false then
             return
@@ -115,9 +119,7 @@ if CLIENT then
             end
         end
 
-        gfconsole.search_panel("GFConsole.Container", function(panel)
-            panel:AddRecord(unpack(arguments))
-        end)
+        container:AddRecord(...)
     end
 
     function gfconsole.send(filter, ...)
