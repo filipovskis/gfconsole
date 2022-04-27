@@ -77,6 +77,8 @@ function PANEL:AddCheckbox(text, bool, func)
     checkbox:SizeToContentsX(20)
 
     self.control:AddPanel(checkbox)
+
+    return checkbox
 end
 
 function PANEL:AddRecord(...)
@@ -118,9 +120,11 @@ end
 
 function PANEL:LoadFilters()
     for _, data in ipairs(gfconsole.filter.get_all()) do
-        self:AddCheckbox(data.id, data.cv:GetBool(), function()
+        local check = self:AddCheckbox(data.id, data.cv:GetBool(), function()
             gfconsole.filter.toggle(data.id)
         end)
+
+        check.cv = data.cv
     end
 end
 
