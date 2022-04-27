@@ -13,12 +13,12 @@ local config = gfconsole.config
 
 -- A list of extensions, which will be enabled on start
 config.enabled = {
-    ["errors"] = true,
-    ["execute"] = true,
-    ["relay"] = true,
-    ["subscriptions"] = true,
-    ["utility"] = true,
-    ["retry"] = false
+    ["errors"]          = true,
+    ["execute"]         = true,
+    ["relay"]           = true,
+    ["subscriptions"]   = true,
+    ["utility"]         = true,
+    ["retry"]           = false
 }
 
 -- The list of available fonts
