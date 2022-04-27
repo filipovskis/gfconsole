@@ -145,7 +145,7 @@ local new_print_table do
         OldMsg(...)
         OldMsg("\n")
 
-        send_with_space("print", ...)
+        send_with_space(gfconsole.FILTER_MSG, ...)
     end
 
     local function parse_key(key)
