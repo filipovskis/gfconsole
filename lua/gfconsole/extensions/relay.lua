@@ -7,19 +7,22 @@ Email: tochonement@gmail.com
 
 --]]
 
-local GLOBAL = _G
 local send = gfconsole.send
 
 local color_client = Color(255, 221, 102)
 local color_server = Color(156, 221, 255, 255)
 
-OldPrint = OldPrint or GLOBAL.print
-OldMsg = OldMsg or GLOBAL.Msg
-OldMsgC = OldMsgC or GLOBAL.MsgC
-OldPrintTable = OldPrintTable or GLOBAL.PrintTable
-
 gfconsole.FILTER_PRINT = gfconsole.FILTER_PRINT or gfconsole.filter.create("Print")
 gfconsole.FILTER_MSG = gfconsole.FILTER_MSG or gfconsole.filter.create("Etc")
+
+do
+    local _G = _G
+    OldPrint = OldPrint or _G.print
+    OldMsg = OldMsg or _G.Msg
+    OldMsgC = OldMsgC or _G.MsgC
+    OldPrintTable = OldPrintTable or _G.PrintTable
+    OldMsgN = OldMsgN or _G.MsgN
+end
 
 local function send_with_space(filter, ...)
     send(filter, ...)
@@ -29,38 +32,38 @@ end
 -- ANCHOR Utility
 
 local translate do
+    local format = string.format
+    local tostring = tostring
+    local type = type
+    local istable = istable
+    local TypeID = TypeID
+
     local translators = {
         ["Vector"] = function(object)
-            return string.format("Vector(%i, %i, %i)", object.x, object.y, object.z)
+            return format("Vector(%i, %i, %i)", object.x, object.y, object.z)
         end,
         ["Color"] = function(object)
-            return string.format("Color(%i, %i, %i, %i)", object.r, object.g, object.b, object.a)
+            return format("Color(%i, %i, %i, %i)", object.r, object.g, object.b, object.a)
         end,
         ["Angle"] = function(object)
-            return string.format("Angle(%i, %i, %i)", object.p, object.y, object.r)
+            return format("Angle(%i, %i, %i)", object.p, object.y, object.r)
         end
     }
 
     local function is_color(tbl)
-        local found = 0
-
-        for _, key in ipairs({"r", "g", "b", "a"}) do
-            if tbl[key] then
-                found = found + 1
-            end
-        end
-
-        return (found == 4)
+        return istable(tbl) and TypeID(tbl) == TYPE_COLOR
     end
 
     function translate(any)
-        local type = type(any)
-        local translator = translators[type]
+        local sType = type(any)
+        local translator = translators[sType]
 
-        if translator then
+        if sType == "string" then
+            return any
+        elseif translator then
             return translator(any)
         else
-            if type == "table" and is_color(any) then
+            if is_color(any) then
                 return translators["Color"](any)
             else
                 return tostring(any)
@@ -69,52 +72,67 @@ local translate do
     end
 end
 
-local function parse_args(separator, ...)
-    local translated = {}
-    local count = select("#", ...)
+local parse_args do
+    local select = select
+    local unpack = unpack
+    local nilStr = "nil"
 
-    for i = 1, count do
-        local value = select(i, ...)
+    function parse_args(separator, ...)
+        local result, count = {}, 0
+        local arg_amount = select("#", ...)
 
-        if value == nil then
-            table.insert(translated, "nil")
-        else
-            table.insert(translated, translate(value))
+        for i = 1, arg_amount do
+            local value = select(i, ...)
+
+            count = count + 1
+
+            if value == nil then
+                result[count] = nilStr
+            else
+                result[count] = translate(value)
+            end
+
+            if separator and i < count then
+                result[count] = result[count] .. separator
+            end
         end
 
-        if separator and i < count then
-            table.insert(translated, separator)
-        end
+        return unpack(result)
     end
-
-    return unpack(translated)
 end
 
 -- ANCHOR Override
 
-local function new_print(...)
-    OldPrint(...)
+local new_print do
+    local getinfo = debug.getinfo
+    local explode = string.Explode
 
-    local info = debug.getinfo(2)
+    function new_print(...)
+        OldPrint(...)
 
-    if not info then
-        send_with_space(gfconsole.FILTER_PRINT, color_white, parse_args("  ", ...))
-        return
+        local info = getinfo(2)
+
+        if not info then
+            send_with_space(gfconsole.FILTER_PRINT, color_white, parse_args("  ", ...))
+            return
+        end
+
+        local src = info.short_src
+        local exploded = explode("/", src)
+        local prefix = exploded[#exploded] .. ":" .. info.linedefined
+
+        send_with_space(gfconsole.FILTER_PRINT, SERVER and color_server or color_client, prefix , color_white, " -- ", parse_args("  ", ...))
     end
-
-    local prefix = ""
-    local src = info.short_src
-    local exploded = string.Explode("/", src)
-
-    prefix = exploded[#exploded]
-    prefix = prefix .. ":"  .. info.linedefined
-
-    send_with_space(gfconsole.FILTER_PRINT, (SERVER and color_server or color_client), prefix , color_white, " -- ", parse_args("  ", ...))
 end
 
 local function new_msg(...)
     OldMsg(...)
     send(gfconsole.FILTER_MSG, color_white, ...)
+end
+
+local function new_msgn(...)
+    OldMsgN(...)
+    send_with_space(gfconsole.FILTER_MSG, color_white, ...)
 end
 
 local function new_msgc(...)
@@ -169,6 +187,7 @@ end
 local function override()
     print = new_print
     Msg = new_msg
+    MsgN = new_msgn
     MsgC = new_msgc
     PrintTable = new_print_table
 end

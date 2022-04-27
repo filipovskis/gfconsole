@@ -40,6 +40,7 @@ if SERVER then
             if bool then
                 gfconsole.subscriptions.add(ply)
             else
+                ply:ChatPrint("You unsubscribed.")
                 gfconsole.subscriptions.remove(ply)
             end
         end
@@ -54,7 +55,7 @@ else
     gfconsole.buttons.add("Subscribe", function()
         toggle(true)
     end)
-    
+
     gfconsole.buttons.add("Unsubscribe", function()
         toggle(false)
     end)
