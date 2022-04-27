@@ -7,6 +7,8 @@ Email: tochonement@gmail.com
 
 --]]
 
+gfconsole.FILTER_SUBSCRIPTIONS = gfconsole.filter.create("Subscriptions")
+
 if SERVER then
     util.AddNetworkString("gfconsole:Subscribe")
 
@@ -24,11 +26,11 @@ if SERVER then
     end)
 
     hook.Add("gfconsole.SubscriberAdded", "Notify", function(ply)
-        gfconsole.send("Subscriptions", Color(59, 179, 95), "[Subscriptions] ", color_white, "User added: " .. ply:Name(), "\n")
+        gfconsole.send(gfconsole.FILTER_SUBSCRIPTIONS, Color(59, 179, 95), "[Subscriptions] ", color_white, "User added: " .. ply:Name(), "\n")
     end)
 
     hook.Add("gfconsole.SubscriberRemoved", "Notify", function(ply)
-        gfconsole.send("Subscriptions", Color(59, 179, 95), "[Subscriptions] ", color_white, "User removed: " .. ply:Name(), "\n")
+        gfconsole.send(gfconsole.FILTER_SUBSCRIPTIONS, Color(59, 179, 95), "[Subscriptions] ", color_white, "User removed: " .. ply:Name(), "\n")
     end)
 
     net.Receive("gfconsole:Subscribe", function(len, ply)
