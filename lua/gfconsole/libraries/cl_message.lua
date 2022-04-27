@@ -10,6 +10,7 @@ Email: tochnonement@gmail.com
 local add_message do
     local Run = hook.Run
     local GetConVar = GetConVar
+    local color_gray = Color(200, 200, 200)
 
     function add_message(from_server, filter, ...)
         local frame = gfconsole.frame
@@ -34,7 +35,15 @@ local add_message do
             end
         end
 
-        container:AddRecord(...)
+        if GetConVar("gfconsole_timestamps"):GetBool() then
+            if select(1, ...) ~= "\n" then
+                container:AddRecord(color_gray, os.date("[%H:%M:%S] "), ...)
+            else
+                container:AddRecord(...)
+            end
+        else
+            container:AddRecord(...)
+        end
     end
 end
 

@@ -86,6 +86,50 @@ do
         return btn
     end
 
+    local function credit(plist, data)
+        local pnl = plist:Add('DButton')
+        pnl:SetTall(ScreenScale(14.5))
+        pnl:SetText('')
+        pnl:Dock(TOP)
+        pnl:DockMargin(0, 0, 0, ScreenScale(2))
+        pnl.Paint = function(p, w, h)
+            surface.SetDrawColor(0, 0, 0, p:IsHovered() and 200 or 100)
+            surface.DrawRect(0, 0, w, h)
+        end
+        if data.url then
+            pnl.DoClick = function(p)
+                gui.OpenURL(data.url)
+            end
+        else
+            pnl:SetMouseInputEnabled(false)
+        end
+
+        local avatar = pnl:Add('AvatarImage')
+        avatar:SetSteamID(data.s64, 64)
+        avatar:DockMargin(2, 2, 5, 2)
+        avatar:SetWide(pnl:GetTall() - 4)
+        avatar:Dock(LEFT)
+
+        local lblName = pnl:Add('DLabel')
+        lblName:SetText(data.name)
+        lblName:SetFont('gfconsole.Title')
+        lblName:SetExpensiveShadow(1, color_black)
+        lblName:Dock(FILL)
+        if data.rainbow then
+            lblName.Think = function(p)
+                p:SetTextColor(HSVToColor((CurTime() * 16) % 360, 1, 1))
+            end
+        else
+            lblName:SetTextColor(data.color or color_white)
+        end
+
+        local lblDesc = pnl:Add('DLabel')
+        lblDesc:SetText(data.desc)
+        lblDesc:SetFont('gfconsole.Tiny')
+        lblDesc:SetExpensiveShadow(1, color_black)
+        lblDesc:Dock(BOTTOM)
+    end
+
     function gfconsole.show_settings()
         local frame = vgui.Create('DFrame')
         frame:SetTitle('GFConsole Settings')
@@ -106,6 +150,7 @@ do
         title(plist, 'Frame')
         checkbox(plist, 'Automatically create console on join', GetConVar('gfconsole_autocreate'))
         checkbox(plist, 'Automatically subscribe on join', GetConVar('gfconsole_autosubcribe'))
+        checkbox(plist, 'Display timestamps', GetConVar('gfconsole_timestamps'))
 
         title(plist, 'Font')
         do
@@ -151,6 +196,23 @@ do
         button(plist, 'Close Console', function()
             gfconsole.close()
         end)
+        button(plist, 'Check GitHub', function()
+            gui.OpenURL('https://github.com/tochnonement/gfconsole')
+        end)
+
+        title(plist, 'Credits')
+        credit(plist, {
+            name = 'tochnonement',
+            s64 = '76561198086200873',
+            desc = 'Author (contact me if you\'d need any help)',
+            url = 'https://steamcommunity.com/id/tochnonement/',
+            rainbow = true
+        })
+        credit(plist, {
+            name = 'aStonedPenguin',
+            s64 = '76561198042764635',
+            desc = 'pON library'
+        })
 
         return frame
     end
