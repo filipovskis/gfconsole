@@ -9,10 +9,14 @@ Email: tochnonement@gmail.com
 
 local add_message do
     local Run = hook.Run
+    local Trim = string.Trim
     local GetConVar = GetConVar
     local select = select
+    local isstring = isstring
+    local SysTime = SysTime
 
     local color_gray = Color(200, 200, 200)
+    local last_ts_print = 0
 
     function add_message(from_server, filter, ...)
         local frame = gfconsole.frame
@@ -37,15 +41,25 @@ local add_message do
             end
         end
 
-        if GetConVar("cl_gfconsole_timestamps"):GetBool() then
-            if select(1, ...) ~= "\n" then
-                container:AddRecord(color_gray, os.date("[%H:%M:%S] "), ...)
-            else
-                container:AddRecord(...)
+        if last_ts_print ~= SysTime() then
+            local first = select(1, ...)
+            local second = select(2, ...)
+            local is_ts_allowed = GetConVar("cl_gfconsole_timestamps"):GetBool()
+
+            if isstring(first) and Trim(first) == "" then
+                is_ts_allowed = false
+            elseif isstring(second) and Trim(second) == "" then
+                is_ts_allowed = false
             end
-        else
-            container:AddRecord(...)
+
+            if is_ts_allowed then
+                container:AddRecord(color_gray, os.date("[%H:%M:%S] "))
+            end
+
+            last_ts_print = SysTime()
         end
+
+        container:AddRecord(...)
     end
 end
 
