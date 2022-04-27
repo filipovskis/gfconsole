@@ -11,7 +11,7 @@ gfconsole.config = {}
 
 local config = gfconsole.config
 
--- A list of extensions, which will be enabled on start
+-- The list of extensions, which will be enabled on start
 config.enabled = {
     ["errors"]          = true,
     ["execute"]         = true,
@@ -30,16 +30,16 @@ config.fonts = {
     "Courier New"
 }
 
--- Accent colors
+-- The accent color
 config.color = Color(39, 174, 96)
 
--- A customcheck function for access to execute commands
--- Be aware that this is dangerous
+-- (DANGEROUS) The customcheck function for access to execute commands
 config.can_execute = function(ply)
     return ply:IsSuperAdmin()
 end
 
--- A customcheck function for access to be a subscriber
+-- The customcheck function for access to be a subscriber
+-- If "subscriptions" extension is disabled it will determine whether player can receive messages or not
 config.can_subscribe = function(ply)
     return ply:IsSuperAdmin()
 end
