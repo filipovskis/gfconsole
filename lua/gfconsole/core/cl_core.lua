@@ -26,6 +26,14 @@ function gfconsole.reload_frame()
 end
 concommand.Add("gfconsole_reload_frame", gfconsole.reload_frame)
 
+concommand.Add("gfconsole_close", function()
+    local frame = gfconsole.frame
+
+    if IsValid(frame) then
+        frame:Remove()
+    end
+end)
+
 local function toggle(_, cmd)
     local enable = (cmd == "+gfconsole")
 
