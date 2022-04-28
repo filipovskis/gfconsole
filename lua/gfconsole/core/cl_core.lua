@@ -151,6 +151,30 @@ do
         checkbox(plist, 'Automatically create console on join', GetConVar('cl_gfconsole_auto_open'))
         checkbox(plist, 'Automatically subscribe on join', GetConVar('cl_gfconsole_auto_subscribe'))
         checkbox(plist, 'Display timestamps', GetConVar('cl_gfconsole_timestamps'))
+        do
+            local cv = GetConVar('cl_gfconsole_color')
+            local found = false
+
+            local combo = plist:Add('DComboBox')
+            combo:Dock(TOP)
+            combo:DockMargin(0, 0, 0, ScreenScale(2))
+
+            for name in pairs(gfconsole.config.colors) do
+                local index = combo:AddChoice(name)
+                if cv:GetString() == name then
+                    combo:ChooseOptionID(index)
+                    found = true
+                end
+            end
+
+            combo.OnSelect = function(p, index, value)
+                cv:SetString(value)
+            end
+
+            if not found then
+                combo:SetText(cv:GetString())
+            end
+        end
 
         title(plist, 'Font')
         do
