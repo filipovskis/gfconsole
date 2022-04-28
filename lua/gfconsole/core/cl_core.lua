@@ -151,6 +151,7 @@ do
         checkbox(plist, 'Automatically create console on join', GetConVar('cl_gfconsole_auto_open'))
         checkbox(plist, 'Automatically subscribe on join', GetConVar('cl_gfconsole_auto_subscribe'))
         checkbox(plist, 'Display timestamps', GetConVar('cl_gfconsole_timestamps'))
+        checkbox(plist, 'Hide toolbar when isn\'t active', GetConVar('cl_gfconsole_hidetoolbar'))
         do
             local cv = GetConVar('cl_gfconsole_color')
             local found = false

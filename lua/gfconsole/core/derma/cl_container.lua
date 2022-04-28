@@ -68,6 +68,27 @@ function PANEL:Paint(w, h)
     -- surface.DrawRect(0, 0, w, h)
 end
 
+function PANEL:UpdateToolBarVisibility()
+    local bool = gfconsole.holding
+    local old = self.control:IsVisible()
+
+    if not GetConVar("cl_gfconsole_hidetoolbar"):GetBool() then
+        bool = true
+    end
+
+    self.control:SetVisible(bool)
+
+    if old ~= bool then
+        self:InvalidateLayout()
+    end
+end
+
+function PANEL:Think()
+    if not GetConVar("cl_gfconsole_hidetoolbar"):GetBool() then return end
+
+    self:UpdateToolBarVisibility()
+end
+
 function PANEL:AddCheckbox(text, bool, func)
     local checkbox = vgui.Create("GFConsole.Checkbox")
     checkbox:SetText("Show: " .. text)
