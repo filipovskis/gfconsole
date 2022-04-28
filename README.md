@@ -41,8 +41,8 @@ You can configure console up to your preferences, just type `gfconsole_settings`
 3. Press the "subscribe" button at the console's top
 
 ### 👀 Showcase
-![Console](https://i.imgur.com/70iJMhV.png)
-![Settings](https://i.imgur.com/N1Hacqx.png)
+![Console](https://i.imgur.com/dQ3aYu3.png)
+![Settings](https://i.imgur.com/fDgJ20H.png)
 
 ### 🔗 Credits
 - [thelastpenguin](https://github.com/thelastpenguin) - pON
