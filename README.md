@@ -2,43 +2,40 @@
 ![Test](https://img.shields.io/github/license/tochnonement/gfconsole)
 
 A **user-friendly** developer console for **Garry's Mod**. 
-Makes possible to relay **messages** and **errors** from a **server's console** to developers in-game, so they could develop without interrupting to check a server's control panel.
+Makes possible to relay **messages** and **errors** from a **server's console** to developers in-game, so they could develop without need of interrupting to check a server's control panel.
 
 ### 💡 Features
-- Server console messages are relaying to the console
-  - `print` is supported
-  - `Msg` is supported
-  - `MsgN` is supported
-  - `MsgC` is supported
-  - `PrintTable` is supported
+- All messages that come to the original game console and to the server console are relaying to this console
 - Errors are relaying to the console
-- Realm switching
+- Realm switching (client/server/both)
 - Subscription system
 - Filter system
-- FPS and ping indicators
+- Average ping and framerate indicators
 - Optimized message delivery
-- The console can be moved or resized
+- Frame customization (size, position, font and etc.)
+- Vectors and Angles being parsed in the console, so you could easily copy them
+- Simple to use
 
 ### 🔨 Setup
-1. Download this repository from the releases section.
+1. Download [the latest release](https://github.com/tochnonement/gfconsole/releases) from the releases section.
 2. Extract the file.
 3. Place `gfconsole` folder into your server's `garrysmod/addons` folder.
 4. Restart your server.
 5. You're done.
 
 #### (Optional) If you want error relaying
-1. Download an appropriate DLL from [gm_luaerror](https://github.com/danielga/gm_luaerror)'s releases section (`gmsv_luaerror_win32` for example).
-2. Place the DLL into your server's `garrysmod/lua/bin` folder (if there's no folder create one).
-3. Be sure that `errors` extension in enabled in config.
+1. Download the [gm_luaerror](https://github.com/danielga/gm_luaerror) module for your server's OS from the releases section (`gmsv_luaerror_win32.dll` for example).
+2. Place the downloaded dll into your server's `garrysmod/lua/bin` folder (if there is no folder just create one).
+3. Be sure that `errors` extension is enabled in config.
 4. You're done.
 
-### 🤔 How to use
+### 🤔 How To Use
 **NOTE:**
 You can configure console up to your preferences, just type `gfconsole_settings` in the game console.
 
-1. Bind any button to `+gfconsole`
-2. Hold the button to interact with the console
-3. Press the "subscribe" button at the console's top
+1. Bind any button to `+gfconsole`.
+2. Hold the button to interact with the console.
+3. Press the "Subscribe" button at the console's top.
 
 ### 👀 Showcase
 ![Console](https://i.imgur.com/dQ3aYu3.png)
