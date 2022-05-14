@@ -88,25 +88,30 @@ function PANEL:OnMouseReleased(code)
     end
 end
 
-function PANEL:Think()
-    local curtime = CurTime()
+do
+    local CurTime = CurTime
+    local Round = math.Round
 
-    self:UpdateCollected()
+    function PANEL:Think()
+        local curtime = CurTime()
 
-    if (self.next_update or 0) <= curtime then
-        self.fps:SetText(math.Round(get_average(self.collected.fps)))
-        self.fps:SizeToContentsX()
+        self:UpdateCollected()
 
-        self.ping:SetText(math.Round(get_average(self.collected.ping)) .. "ms")
-        self.ping:SizeToContentsX()
+        if (self.next_update or 0) <= curtime then
+            self.fps:SetText(Round(get_average(self.collected.fps)))
+            self.fps:SizeToContentsX()
 
-        self:ResetCollected()
+            self.ping:SetText(Round(get_average(self.collected.ping)) .. "ms")
+            self.ping:SizeToContentsX()
 
-        self.next_update = curtime + .8
-    end
+            self:ResetCollected()
 
-    if gfconsole.holding then
-        self:MoveController()
+            self.next_update = curtime + .8
+        end
+
+        if gfconsole.holding then
+            self:MoveController()
+        end
     end
 end
 

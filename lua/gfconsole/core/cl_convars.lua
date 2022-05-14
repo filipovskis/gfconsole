@@ -17,7 +17,6 @@ local cvColor = CreateClientConVar("cl_gfconsole_color", "green", true, false)
 cvars.AddChangeCallback("cl_gfconsole_hidetoolbar", function()
     local frame = gfconsole.frame
     if IsValid(frame) then
-        print(frame)
         frame.panel:UpdateToolBarVisibility()
     end
 end)
