@@ -92,8 +92,9 @@ local parse_args do
                 result[count] = translate(value)
             end
 
-            if separator and i < count then
-                result[count] = result[count] .. separator
+            if separator and i < arg_amount then
+                count = count + 1
+                result[count] = separator
             end
         end
 
@@ -193,4 +194,5 @@ local function override()
 end
 
 override()
+print('meow', 123, 321)
 hook.Add("PostGamemodeLoaded", "gfconsole.Relay", override)
