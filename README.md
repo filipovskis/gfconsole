@@ -42,4 +42,15 @@ You can configure console up to your preferences, just type `gfconsole_settings`
 ![Settings](https://i.imgur.com/fDgJ20H.png)
 
 ### 🔗 Credits
+- [Python1320](https://github.com/Python1320) - Python1320
+- [Ninja101](https://github.com/Ninja101) - Ninja101
+- [CapsAdmin](https://github.com/CapsAdmin) - CapsAdmin
+- [mortenae](https://github.com/mortenae) - mortenae
+- [PotcFdk](https://github.com/PotcFdk) - PotcFdk
+- [SpiralP](https://github.com/SpiralP) - SpiralP
+- [wyozi](https://github.com/wyozi) - wyozi
+- [Techbot121](https://github.com/Techbot121) - Techbot121
+- [Earu](https://github.com/Earu) - Earu
+- [homonovus](https://github.com/homonovus) - homonovus
+- [Xerasin](https://github.com/Xerasin) - Xerasin
 - [thelastpenguin](https://github.com/thelastpenguin) - pON
