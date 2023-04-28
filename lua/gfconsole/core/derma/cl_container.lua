@@ -105,7 +105,8 @@ end
 
 function PANEL:AddRecord(...)
     for _, object in ipairs({...}) do
-        if isstring(object) then
+        if isstring(object) or isnumber(object) then
+            object = tostring(object)
             if object:match("Vector") then
                 self.richtext:InsertClickableTextStart("@" .. object.. "@")
                     self.richtext:AppendText(object)
